@@ -5,7 +5,6 @@ import { useItemDrop } from "../../../hooks/useItemDrap"
 
 const Container = ({
   id,
-  name,
   children,
 }: CommonComponentProps & PropsWithChildren) => {
   const { componentConfig } = useComponentConfigStore()

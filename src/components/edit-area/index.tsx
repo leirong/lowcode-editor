@@ -3,7 +3,7 @@ import { Component, useComponentsStore } from "../../stores/components"
 import { useComponentConfigStore } from "../../stores/component-config"
 
 export default function EditArea() {
-  const { components, addComponent, deleteComponent } = useComponentsStore()
+  const { components, addComponent } = useComponentsStore()
   const { componentConfig } = useComponentConfigStore()
 
   useEffect(() => {
