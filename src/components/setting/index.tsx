@@ -1,3 +1,10 @@
+import { useComponentsStore } from "../../stores/components"
+
 export default function Setting() {
-  return <div>Setting</div>
+  const { components } = useComponentsStore()
+  return (
+    <div className="h-full overflow-y-scroll">
+      <pre>{JSON.stringify(components, null, 2)}</pre>{" "}
+    </div>
+  )
 }
