@@ -13,6 +13,7 @@ const Container = ({
   return (
     <div
       ref={drop}
+      data-component-id={id}
       className={classNames("min-h-[100px] p-[20px]", {
         "border-[2px] border-blue": canDrop,
         "border-[1px] border-[#000]": !canDrop,

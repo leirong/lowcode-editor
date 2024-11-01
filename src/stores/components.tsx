@@ -63,7 +63,7 @@ export const useComponentsStore = create<Action & State>((set, get) => ({
   },
 }))
 
-function getComponentById(
+export function getComponentById(
   id: number,
   components: Component[]
 ): Component | null {
