@@ -10,20 +10,21 @@ export default function EditArea() {
   const [hoveredComponentId, setHoveredComponentId] = useState<number>()
 
   function renderComponents(components: Component[]): ReactNode {
-    return components.map((component) => {
-      const config = componentConfig[component.name]
+    return components.map(({ id, name, props, styles, children }) => {
+      const config = componentConfig[name]
       if (!config) return null
-      const props = {
-        key: component.id,
-        id: component.id,
-        name: component.name,
+      const elementProps = {
+        key: id,
+        id: id,
+        name: name,
         ...config.defaultProps,
-        ...component.props,
+        ...props,
+        styles,
       }
       return createElement(
         config.component,
-        { ...props },
-        renderComponents(component.children || [])
+        { ...elementProps },
+        renderComponents(children || [])
       )
     })
   }

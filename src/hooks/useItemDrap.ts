@@ -21,6 +21,7 @@ export function useItemDrop(accept: string[], id: number) {
           name: item.type,
           desc,
           props,
+          styles: {},
         },
         id
       )

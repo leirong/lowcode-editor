@@ -5,6 +5,7 @@ import { useItemDrop } from "../../../hooks/useItemDrap"
 
 const Container = ({
   id,
+  styles,
   children,
 }: CommonComponentProps & PropsWithChildren) => {
   const { componentConfig } = useComponentConfigStore()
@@ -14,6 +15,7 @@ const Container = ({
     <div
       ref={drop}
       data-component-id={id}
+      style={styles}
       className={classNames("min-h-[100px] p-[20px]", {
         "border-[2px] border-blue": canDrop,
         "border-[1px] border-[#000]": !canDrop,

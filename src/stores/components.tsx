@@ -1,9 +1,11 @@
+import { CSSProperties } from "react"
 import { create } from "zustand"
 export interface Component {
   id: number
   name: string
   desc: string
   props: any
+  styles?: CSSProperties
   children?: Component[]
   parentId?: number
 }
@@ -17,7 +19,12 @@ interface State {
 interface Action {
   addComponent: (component: Component, parentId?: number) => void
   deleteComponent: (componentId: number) => void
-  updateComponent: (componentId: number, props: any) => void
+  updateComponentProps: (componentId: number, props: any) => void
+  updateComponentStyles: (
+    componentId: number,
+    styles: any,
+    replace?: boolean
+  ) => void
   setCurComponentId: (componentId: number | null) => void
 }
 
@@ -30,7 +37,7 @@ export const useComponentsStore = create<Action & State>((set, get) => ({
       curComponentId: componentId,
     })),
   components: [{ id: 1, name: "Page", props: {}, desc: "页面" }],
-  addComponent: (component: Component, parentId?: number) =>
+  addComponent: (component, parentId) =>
     set((state) => {
       if (parentId) {
         const parentComponent = getComponentById(parentId, state.components)
@@ -46,7 +53,7 @@ export const useComponentsStore = create<Action & State>((set, get) => ({
       }
       return { components: [...state.components, component] }
     }),
-  deleteComponent: (componentId: number) => {
+  deleteComponent: (componentId) => {
     if (!componentId) return
     const component = getComponentById(componentId, get().components)
     if (component?.parentId) {
@@ -62,11 +69,23 @@ export const useComponentsStore = create<Action & State>((set, get) => ({
       }
     }
   },
-  updateComponent: (componentId: number, props: any) => {
+  updateComponentProps: (componentId, props) => {
     set((state) => {
       const component = getComponentById(componentId, state.components)
       if (component) {
         component.props = { ...component.props, ...props }
+        return { components: [...state.components] }
+      }
+      return { components: [...state.components] }
+    })
+  },
+  updateComponentStyles: (componentId, styles, replace) => {
+    set((state) => {
+      const component = getComponentById(componentId, state.components)
+      if (component) {
+        component.styles = replace
+          ? { ...styles }
+          : { ...(component.styles || {}), ...styles }
         return { components: [...state.components] }
       }
       return { components: [...state.components] }
