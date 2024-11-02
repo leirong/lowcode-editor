@@ -10,9 +10,9 @@ export interface ButtonProps {
 }
 
 const Button = (props: ButtonProps) => {
-  const { styles, type, text } = props
+  const { id, styles, type, text, ...rest } = props
   return (
-    <AntdButton type={type} style={styles}>
+    <AntdButton type={type} style={styles} {...rest}>
       {text}
     </AntdButton>
   )
