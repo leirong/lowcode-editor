@@ -68,7 +68,7 @@ function SelectedMask({
     })
     ob.observe(container)
     return () => {
-      ob.unobserve(container)
+      ob.disconnect()
     }
   }, [])
 
