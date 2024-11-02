@@ -1,18 +1,25 @@
-import { useMemo } from "react"
-import { useComponentConfigStore } from "../../stores/component-config"
-import DragItem from "./drag-item"
+import { Segmented } from "antd"
+import { useState } from "react"
+import Material from "./material"
+import Outline from "./outline"
+import Source from "./source"
 
-export default function Material() {
-  const { componentConfig } = useComponentConfigStore()
+export default function MaterialWrapper() {
+  const [key, setKey] = useState<string>("物料")
 
-  const components = useMemo(() => {
-    return Object.values(componentConfig).filter((item) => item.name !== "Page")
-  }, [componentConfig])
   return (
     <div>
-      {components.map((item, index) => {
-        return <DragItem key={index} name={item.name} desc={item.desc} />
-      })}
+      <Segmented
+        value={key}
+        onChange={setKey}
+        block
+        options={["物料", "大纲", "源码"]}
+      />
+      <div className="pt-[20px] h-[calc(100vh-60px-30px-20px)]">
+        {key === "物料" && <Material />}
+        {key === "大纲" && <Outline />}
+        {key === "源码" && <Source />}
+      </div>
     </div>
   )
 }

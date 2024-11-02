@@ -21,8 +21,13 @@ export default function EditArea() {
         ...props,
         styles,
       }
+
+      if (!config?.dev) {
+        return null
+      }
+
       return createElement(
-        config.component,
+        config.dev,
         { ...elementProps },
         renderComponents(children || [])
       )

@@ -14,7 +14,6 @@ export default function Setting() {
 
   return (
     <div className="h-full overflow-y-scroll">
-      {/* <pre>{JSON.stringify(components, null, 2)}</pre> */}
       <Segmented
         block
         value={key}
