@@ -13,12 +13,13 @@ export function useItemDrop(accept: string[], id: number) {
       if (didDrop) return
       message.success(item.type)
 
-      const props = componentConfig[item.type].defaultProps
+      const { defaultProps: props, desc } = componentConfig[item.type]
 
       addComponent(
         {
           id: new Date().getTime(),
           name: item.type,
+          desc,
           props,
         },
         id

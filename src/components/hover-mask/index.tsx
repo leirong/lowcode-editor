@@ -31,7 +31,7 @@ const HoverMask = ({
     return document.querySelector(`.${portalWrapperClassName}`)!
   }, [])
 
-  useEffect(() => {
+  function updatePosition() {
     if (!componentId) return
     const container = document.querySelector(`.${containerClassName}`)
     if (!container) return
@@ -56,7 +56,22 @@ const HoverMask = ({
       labelLeft,
       labelTop,
     })
-  }, [componentId])
+  }
+
+  useEffect(() => {
+    updatePosition()
+  }, [componentId, components])
+
+  useEffect(() => {
+    const container = document.querySelector(`.${containerClassName}`)!
+    const ob = new ResizeObserver(() => {
+      updatePosition()
+    })
+    ob.observe(container)
+    return () => {
+      ob.unobserve(container)
+    }
+  }, [])
 
   return createPortal(
     <>
@@ -96,7 +111,7 @@ const HoverMask = ({
             whiteSpace: "nowrap",
           }}
         >
-          {curComponent?.name}
+          {curComponent?.desc}
         </div>
       </div>
     </>,

@@ -2,8 +2,9 @@ import { useDrag } from "react-dnd"
 
 export interface DragItemProps {
   name: string
+  desc: string
 }
-const DragItem = ({ name }: DragItemProps) => {
+const DragItem = ({ name, desc }: DragItemProps) => {
   const [_, drag] = useDrag(() => ({
     type: name,
     item: {
@@ -15,7 +16,7 @@ const DragItem = ({ name }: DragItemProps) => {
       ref={drag}
       className="border-dashed border-[1px] border-[#000] py-[8px] px-[10px] m-[10px] cursor-move inline-block bg-white hover:bg-[#ccc]"
     >
-      {name}
+      {desc}
     </div>
   )
 }
