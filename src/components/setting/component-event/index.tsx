@@ -1,12 +1,15 @@
 import { Button, Collapse } from "antd"
 import { useComponentConfigStore } from "../../../stores/component-config"
-import { useComponentsStore } from "../../../stores/components"
+import {
+  getComponentById,
+  useComponentsStore,
+} from "../../../stores/components"
 import ActionModal, { ActionConfig } from "../action-modal"
 import { useState } from "react"
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons"
 
 export default function ComponentEvent() {
-  const { curComponentId, curComponent, updateComponentProps } =
+  const { curComponentId, curComponent, updateComponentProps, components } =
     useComponentsStore()
   const { componentConfig } = useComponentConfigStore()
 
@@ -141,6 +144,35 @@ export default function ComponentEvent() {
                       className="border border-[#aaa] m-[10px] p-[10px] relative"
                     >
                       <div className="text-[blue]">自定义 JS</div>
+                      <EditOutlined
+                        className="absolute top-[10px] right-[30px] cursor-pointer"
+                        onClick={() => {
+                          editAction(action)
+                          setCurActionIndex(index)
+                        }}
+                      />
+                      <DeleteOutlined
+                        className="absolute top-[10px] right-[10px] cursor-pointer"
+                        onClick={() => deleteAction(name, index)}
+                      />
+                    </div>
+                  )}
+                  {action.type === "componentMethod" && (
+                    <div
+                      key="componentMethod"
+                      className="border border-[#aaa] m-[10px] p-[10px] relative"
+                    >
+                      <div className="text-[blue]">组件方法</div>
+                      <div>
+                        {
+                          getComponentById(
+                            action.config.componentId,
+                            components
+                          )?.desc
+                        }
+                      </div>
+                      <div>{action.config.componentId}</div>
+                      <div>{action.config.method}</div>
                       <EditOutlined
                         className="absolute top-[10px] right-[30px] cursor-pointer"
                         onClick={() => {

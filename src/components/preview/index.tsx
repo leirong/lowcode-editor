@@ -1,4 +1,4 @@
-import { ReactNode, createElement } from "react"
+import { ReactNode, createElement, useRef } from "react"
 import { Component, useComponentsStore } from "../../stores/components"
 import { useComponentConfigStore } from "../../stores/component-config"
 import { message } from "antd"
@@ -7,6 +7,8 @@ import { ActionConfig } from "../setting/action-modal"
 export default function Preview() {
   const { components } = useComponentsStore()
   const { componentConfig } = useComponentConfigStore()
+
+  const componentRefs = useRef<Record<string, any>>({})
 
   function handleEvent(component: Component) {
     const { name, props } = component
@@ -34,11 +36,17 @@ export default function Preview() {
               const func = new Function("context", action.code)
               func({
                 name: component.name,
-                props: component.props,
+                ...component.props,
                 showMessage() {
                   message.success("hello world")
                 },
               })
+            } else if (action.type === "componentMethod") {
+              const componentRef =
+                componentRefs.current[action.config.componentId]
+              if (componentRef) {
+                componentRef[action.config.method]?.()
+              }
             }
           })
         }
@@ -57,6 +65,9 @@ export default function Preview() {
         key: id,
         id: id,
         name: name,
+        ref: (ref: any) => {
+          componentRefs.current[id] = ref
+        },
         ...config.defaultProps,
         ...props,
         styles,
