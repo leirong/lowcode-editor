@@ -1,27 +1,41 @@
 import { Modal, Segmented } from "antd"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import GoToLink, { GoToLinkConfig } from "../component-event/actions/go-to-link"
 import ShowMessage, {
   ShowMessageConfig,
 } from "../component-event/actions/show-message"
+import CustomJS, { CustomJSConfig } from "../component-event/actions/custom-js"
+
+export type ActionConfig = GoToLinkConfig | ShowMessageConfig | CustomJSConfig
 
 interface ActionModalProps {
   visible: boolean
-  onOk: (config: GoToLinkConfig | ShowMessageConfig) => void
+  action?: ActionConfig
+  onOk: (config: ActionConfig) => void
   onCancel: () => void
 }
 export default function ActionModal(props: ActionModalProps) {
-  const { visible, onOk, onCancel } = props
+  const { visible, action, onOk, onCancel } = props
+
+  const map = {
+    goToLink: "访问链接",
+    showMessage: "消息提示",
+    customJS: "自定义 JS",
+  }
   const [key, setKey] = useState<string>("访问链接")
 
-  const [curConfig, setCurConfig] = useState<
-    GoToLinkConfig | ShowMessageConfig
-  >()
+  const [curConfig, setCurConfig] = useState<ActionConfig>()
 
   const handleOk = () => {
     if (!curConfig) return
     onOk(curConfig)
   }
+
+  useEffect(() => {
+    if (action) {
+      setKey(map[action.type])
+    }
+  }, [action])
 
   return (
     <Modal
@@ -40,8 +54,24 @@ export default function ActionModal(props: ActionModalProps) {
           block
           options={["访问链接", "消息提示", "自定义 JS"]}
         />
-        {key === "访问链接" && <GoToLink onChange={setCurConfig} />}
-        {key === "消息提示" && <ShowMessage onChange={setCurConfig} />}
+        {key === "访问链接" && (
+          <GoToLink
+            value={action?.type === "goToLink" ? action.url : ""}
+            onChange={setCurConfig}
+          />
+        )}
+        {key === "消息提示" && (
+          <ShowMessage
+            value={action?.type === "showMessage" ? action.config : undefined}
+            onChange={setCurConfig}
+          />
+        )}
+        {key === "自定义 JS" && (
+          <CustomJS
+            value={action?.type === "customJS" ? action.code : ""}
+            onChange={setCurConfig}
+          />
+        )}
       </div>
     </Modal>
   )

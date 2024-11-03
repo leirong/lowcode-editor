@@ -2,8 +2,7 @@ import { ReactNode, createElement } from "react"
 import { Component, useComponentsStore } from "../../stores/components"
 import { useComponentConfigStore } from "../../stores/component-config"
 import { message } from "antd"
-import { GoToLinkConfig } from "../setting/component-event/actions/go-to-link"
-import { ShowMessageConfig } from "../setting/component-event/actions/show-message"
+import { ActionConfig } from "../setting/action-modal"
 
 export default function Preview() {
   const { components } = useComponentsStore()
@@ -22,24 +21,29 @@ export default function Preview() {
       const eventConfig = props[event.name]
       if (eventConfig) {
         componentProps[event.name] = () => {
-          eventConfig.actions.forEach(
-            (action: GoToLinkConfig | ShowMessageConfig) => {
-              if (action.type === "goToLink") {
-                window.location.href = action.url
-              } else if (action.type === "showMessage") {
-                if (action.config.type === "success") {
-                  message.success(action.config.text)
-                } else if (action.config.type === "error") {
-                  message.error(action.config.text)
-                }
+          eventConfig.actions.forEach((action: ActionConfig) => {
+            if (action.type === "goToLink") {
+              window.location.href = action.url
+            } else if (action.type === "showMessage") {
+              if (action.config.type === "success") {
+                message.success(action.config.text)
+              } else if (action.config.type === "error") {
+                message.error(action.config.text)
               }
+            } else if (action.type === "customJS") {
+              const func = new Function("context", action.code)
+              func({
+                name: component.name,
+                props: component.props,
+                showMessage() {
+                  message.success("hello world")
+                },
+              })
             }
-          )
+          })
         }
       }
     })
-
-    console.log("componentProps :>> ", componentProps)
 
     return componentProps
   }
