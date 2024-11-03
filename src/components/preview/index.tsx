@@ -2,6 +2,8 @@ import { ReactNode, createElement } from "react"
 import { Component, useComponentsStore } from "../../stores/components"
 import { useComponentConfigStore } from "../../stores/component-config"
 import { message } from "antd"
+import { GoToLinkConfig } from "../setting/component-event/actions/go-to-link"
+import { ShowMessageConfig } from "../setting/component-event/actions/show-message"
 
 export default function Preview() {
   const { components } = useComponentsStore()
@@ -19,21 +21,20 @@ export default function Preview() {
     events.forEach((event) => {
       const eventConfig = props[event.name]
       if (eventConfig) {
-        const { type } = eventConfig
-        if (type === "goToLink" && eventConfig.url) {
-          componentProps[event.name] = () => {
-            window.location.href = eventConfig.url
-          }
-        } else if (type === "showMessage" && eventConfig.config) {
-          if (eventConfig.config.type === "success") {
-            componentProps[event.name] = () => {
-              message.success(eventConfig.config.text)
+        componentProps[event.name] = () => {
+          eventConfig.actions.forEach(
+            (action: GoToLinkConfig | ShowMessageConfig) => {
+              if (action.type === "goToLink") {
+                window.location.href = action.url
+              } else if (action.type === "showMessage") {
+                if (action.config.type === "success") {
+                  message.success(action.config.text)
+                } else if (action.config.type === "error") {
+                  message.error(action.config.text)
+                }
+              }
             }
-          } else if (eventConfig.config.type === "error") {
-            componentProps[event.name] = () => {
-              message.error(eventConfig.config.text)
-            }
-          }
+          )
         }
       }
     })

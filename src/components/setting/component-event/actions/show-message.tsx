@@ -1,57 +1,67 @@
-import { Input, Select } from "antd"
+import { Form, Input, Select } from "antd"
 import { useComponentsStore } from "../../../../stores/components"
-interface ShowMessageProps {
-  eventName: string
+import { useState } from "react"
+
+export interface ShowMessageConfig {
+  type: "showMessage"
+  config: {
+    type: "success" | "error"
+    text: string
+  }
 }
-const ShowMessage = ({ eventName }: ShowMessageProps) => {
-  const { curComponentId, curComponent, updateComponentProps } =
-    useComponentsStore()
-  if (!curComponentId || !curComponent) return null
+
+interface ShowMessageProps {
+  value?: ShowMessageConfig["config"]
+  onChange?: (value: ShowMessageConfig) => void
+}
+
+const ShowMessage = ({ value, onChange }: ShowMessageProps) => {
+  const { curComponentId } = useComponentsStore()
+  const [type, setType] = useState(value?.type || "success")
+  const [text, setText] = useState(value?.text || "")
+  if (!curComponentId) return null
   return (
-    <div className="mt-[10px]">
-      <div className="flex items-center gap-[10px]">
-        <div>类型</div>
-        <div>
+    <div className="flex items-center justify-center mt-[10px]">
+      <Form
+        labelCol={{ span: 4 }}
+        wrapperCol={{ span: 18 }}
+        style={{ width: 600 }}
+      >
+        <Form.Item label="类型">
           <Select
-            style={{ width: 160 }}
             options={[
               { label: "成功", value: "success" },
               { label: "失败", value: "error" },
             ]}
             onChange={(value) => {
-              updateComponentProps(curComponentId, {
-                [eventName]: {
-                  ...curComponent?.props?.[eventName],
-                  config: {
-                    ...curComponent?.props?.[eventName]?.config,
-                    type: value,
-                  },
+              setType(value)
+              onChange?.({
+                type: "showMessage",
+                config: {
+                  type: value,
+                  text,
                 },
               })
             }}
-            value={curComponent?.props?.[eventName]?.config?.type}
+            value={type}
           />
-        </div>
-      </div>
-      <div className="flex items-center gap-[10px] mt-[10px]">
-        <div>文本：</div>
-        <div>
+        </Form.Item>
+        <Form.Item label="文本">
           <Input
             onChange={(e) => {
-              updateComponentProps(curComponentId, {
-                [eventName]: {
-                  ...curComponent?.props?.[eventName],
-                  config: {
-                    ...curComponent?.props?.[eventName]?.config,
-                    text: e.target.value,
-                  },
+              setText(e.target.value)
+              onChange?.({
+                type: "showMessage",
+                config: {
+                  type,
+                  text: e.target.value,
                 },
               })
             }}
-            value={curComponent?.props?.[eventName]?.config?.text}
+            value={text}
           />
-        </div>
-      </div>
+        </Form.Item>
+      </Form>
     </div>
   )
 }
