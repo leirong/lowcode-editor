@@ -5,6 +5,8 @@ import ButtonDev from "../components/material/button/dev"
 import ModalDev from "../components/material/modal/dev"
 import TableDev from "../components/material/table/dev"
 import TableColumnDev from "../components/material/table-column/dev"
+import FormDev from "../components/material/form/dev"
+import FormItemDev from "../components/material/form-item/dev"
 
 import PageProd from "../components/material/page/prod"
 import ContainerProd from "../components/material/container/prod"
@@ -12,6 +14,8 @@ import ButtonProd from "../components/material/button/prod"
 import ModalProd from "../components/material/modal/prod"
 import TableProd from "../components/material/table/prod"
 import TableColumnProd from "../components/material/table-column/prod"
+import FormProd from "../components/material/form/prod"
+import FormItemProd from "../components/material/form-item/prod"
 
 export interface ComponentSetter {
   name: string
@@ -59,7 +63,7 @@ export const useComponentConfigStore = create<State & Action>((set) => ({
       desc: "页面",
       dev: PageDev,
       prod: PageProd,
-      accept: ["Container", "Button", "Modal", "Table"],
+      accept: ["Container", "Button", "Modal", "Table", "Form"],
     },
     Container: {
       name: "Container",
@@ -67,7 +71,7 @@ export const useComponentConfigStore = create<State & Action>((set) => ({
       desc: "容器",
       dev: ContainerDev,
       prod: ContainerProd,
-      accept: ["Button", "Modal", "Container", "Table"],
+      accept: ["Button", "Modal", "Container", "Table", "Form"],
     },
     Button: {
       name: "Button",
@@ -171,7 +175,7 @@ export const useComponentConfigStore = create<State & Action>((set) => ({
       desc: "弹窗",
       dev: ModalDev,
       prod: ModalProd,
-      accept: ["Button", "Container", "Table"],
+      accept: ["Button", "Container", "Table", "Form"],
     },
     Table: {
       name: "Table",
@@ -222,6 +226,84 @@ export const useComponentConfigStore = create<State & Action>((set) => ({
           name: "dataIndex",
           label: "字段",
           type: "input",
+        },
+      ],
+    },
+    Form: {
+      name: "Form",
+      defaultProps: {},
+      desc: "表单",
+      setter: [
+        {
+          name: "title",
+          label: "标题",
+          type: "input",
+        },
+      ],
+      events: [
+        {
+          name: "onFinish",
+          label: "提交事件",
+        },
+      ],
+      methods: [
+        {
+          name: "submit",
+          label: "提交",
+        },
+      ],
+      dev: FormDev,
+      prod: FormProd,
+    },
+    FormItem: {
+      name: "FormItem",
+      defaultProps: {
+        name: new Date().getTime(),
+        label: "姓名",
+        type: "input",
+        rules: {
+          required: false,
+        },
+      },
+      desc: "表单项",
+      dev: FormItemDev,
+      prod: FormItemProd,
+      setter: [
+        {
+          name: "type",
+          label: "类型",
+          type: "select",
+          options: [
+            {
+              label: "输入框",
+              value: "input",
+            },
+            {
+              label: "日期",
+              value: "date",
+            },
+          ],
+        },
+        {
+          name: "label",
+          label: "标题",
+          type: "input",
+        },
+        {
+          name: "name",
+          label: "字段",
+          type: "input",
+        },
+        {
+          name: "rules",
+          label: "校验",
+          type: "select",
+          options: [
+            {
+              label: "必填",
+              value: "required",
+            },
+          ],
         },
       ],
     },
