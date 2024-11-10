@@ -1,12 +1,15 @@
 import { PropsWithChildren } from "react"
-import { useItemDrop } from "../../../hooks/useItemDrap"
+import { useItemDrop } from "../../../hooks/useItemDrop"
+import { useComponentConfigStore } from "../../../stores/component-config"
 
 interface ModalProps extends CommonComponentProps, PropsWithChildren {
   title: string
 }
 
-function Modal({ id, children, title, styles }: ModalProps) {
-  const { canDrop, drop } = useItemDrop(["Button", "Container"], id)
+function Modal({ id, name, children, title, styles }: ModalProps) {
+  const { componentConfig } = useComponentConfigStore()
+  const { accept } = componentConfig[name]
+  const { canDrop, drop } = useItemDrop(accept!, id)
 
   return (
     <div

@@ -3,11 +3,15 @@ import PageDev from "../components/material/page/dev"
 import ContainerDev from "../components/material/container/dev"
 import ButtonDev from "../components/material/button/dev"
 import ModalDev from "../components/material/modal/dev"
+import TableDev from "../components/material/table/dev"
+import TableColumnDev from "../components/material/table-column/dev"
 
 import PageProd from "../components/material/page/prod"
 import ContainerProd from "../components/material/container/prod"
 import ButtonProd from "../components/material/button/prod"
 import ModalProd from "../components/material/modal/prod"
+import TableProd from "../components/material/table/prod"
+import TableColumnProd from "../components/material/table-column/prod"
 
 export interface ComponentSetter {
   name: string
@@ -36,6 +40,7 @@ export interface ComponentConfig {
   methods?: ComponentMethod[]
   dev: any
   prod: any
+  accept?: ComponentConfig["name"][]
 }
 
 interface State {
@@ -54,6 +59,7 @@ export const useComponentConfigStore = create<State & Action>((set) => ({
       desc: "页面",
       dev: PageDev,
       prod: PageProd,
+      accept: ["Container", "Button", "Modal", "Table"],
     },
     Container: {
       name: "Container",
@@ -61,6 +67,7 @@ export const useComponentConfigStore = create<State & Action>((set) => ({
       desc: "容器",
       dev: ContainerDev,
       prod: ContainerProd,
+      accept: ["Button", "Modal", "Container", "Table"],
     },
     Button: {
       name: "Button",
@@ -164,6 +171,59 @@ export const useComponentConfigStore = create<State & Action>((set) => ({
       desc: "弹窗",
       dev: ModalDev,
       prod: ModalProd,
+      accept: ["Button", "Container", "Table"],
+    },
+    Table: {
+      name: "Table",
+      defaultProps: {},
+      desc: "表格",
+      dev: TableDev,
+      prod: TableProd,
+      accept: ["TableColumn"],
+      setter: [
+        {
+          name: "url",
+          label: "接口地址",
+          type: "input",
+        },
+      ],
+    },
+    TableColumn: {
+      name: "TableColumn",
+      defaultProps: {
+        dataIndex: `col_${new Date().getTime()}`,
+        title: "列名",
+      },
+      desc: "表格列",
+      dev: TableColumnDev,
+      prod: TableColumnProd,
+      setter: [
+        {
+          name: "type",
+          label: "类型",
+          type: "select",
+          options: [
+            {
+              label: "文本",
+              value: "text",
+            },
+            {
+              label: "日期",
+              value: "date",
+            },
+          ],
+        },
+        {
+          name: "title",
+          label: "标题",
+          type: "input",
+        },
+        {
+          name: "dataIndex",
+          label: "字段",
+          type: "input",
+        },
+      ],
     },
   },
   registerComponent: (name, componentConfig) =>
