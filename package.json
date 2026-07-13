@@ -44,11 +44,5 @@
     "typescript": "~6.0.2",
     "vite": "^8.1.4"
   },
-  "homepage": "https://leirong.github.io/lowcode-editor/",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@swc/core",
-      "esbuild"
-    ]
-  }
+  "homepage": "https://leirong.github.io/lowcode-editor/"
 }
