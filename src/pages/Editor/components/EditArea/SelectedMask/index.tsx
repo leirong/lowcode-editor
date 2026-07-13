@@ -83,10 +83,13 @@ export function SelectedMask({
     }
   }, [])
 
-  // Portal 挂载目标节点(画布内的容器)
-  const el = useMemo(() => {
-    return document.querySelector(`.${portalWrapperClassName}`)!
-  }, [])
+  // Portal 挂载目标节点(画布内的容器)。
+  // portal-wrapper 在 JSX 中排在本组件之后,首次渲染(如刷新页面且已有选中态)时它尚未进入 DOM,
+  // 故延后到挂载后再获取,避免 createPortal 收到 null 抛「Target container is not a DOM element」
+  const [el, setEl] = useState<Element | null>(null)
+  useEffect(() => {
+    setEl(document.querySelector(`.${portalWrapperClassName}`))
+  }, [portalWrapperClassName])
 
   // 当前选中的组件,用于展示 desc 及计算父级链
   const curComponent = useMemo(() => {
@@ -114,7 +117,9 @@ export function SelectedMask({
     return parentComponents
   }, [curComponent])
 
-  // 通过 Portal 把选中遮罩渲染到画布容器内
+  // 通过 Portal 把选中遮罩渲染到画布容器内;挂载节点未就绪时不渲染
+  if (!el) return null
+
   return createPortal(
     <>
       {/* 选中框:半透明蓝底 + 蓝色虚线边框,区别于悬浮遮罩的实线 */}
