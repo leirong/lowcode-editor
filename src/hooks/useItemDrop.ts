@@ -1,11 +1,11 @@
-import { useDrop } from "react-dnd"
-import { useComponentConfigStore } from "../stores/component-config"
-import { getComponentById, useComponentsStore } from "../stores/components"
-import { message } from "antd"
+import { useDrop } from 'react-dnd'
+import { useComponentConfigStore } from '../stores/componentConfig'
+import { getComponentById, useComponentsStore } from '../stores/components'
+import { message } from 'antd'
 
 export interface ItemType {
   type: string
-  dragType?: "add" | "move"
+  dragType?: 'add' | 'move'
   id: number
 }
 
@@ -19,7 +19,7 @@ export function useItemDrop(accept: string[], id: number) {
       if (didDrop) return
       message.success(item.type)
 
-      if (item.dragType === "move") {
+      if (item.dragType === 'move') {
         const component = getComponentById(item.id, components)!
         deleteComponent(item.id)
         addComponent(component, id)
@@ -34,7 +34,7 @@ export function useItemDrop(accept: string[], id: number) {
             props,
             styles: {},
           },
-          id
+          id,
         )
       }
     },
