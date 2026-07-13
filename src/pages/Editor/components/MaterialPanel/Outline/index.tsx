@@ -1,3 +1,6 @@
+/**
+ * @file 大纲面板:用树形结构展示整棵组件树,点击节点即选中对应组件(同步 curComponentId)。
+ */
 import { Tree } from 'antd'
 import { useComponentsStore } from '../../../../../stores/components'
 
@@ -13,6 +16,7 @@ export function Outline() {
       showLine
       defaultExpandAll
       onSelect={([selectedKey]) => {
+        // 选中大纲节点 → 设为当前编辑组件
         setCurComponentId(selectedKey as number)
       }}
     />

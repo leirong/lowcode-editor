@@ -1,10 +1,17 @@
+/**
+ * @file 顶部标题栏:展示标题,并根据当前路由在"预览 / 退出预览"按钮间切换。
+ */
 import { Button, Space } from "antd"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useComponentsStore } from "../../stores/components"
 
+/**
+ * 顶部标题栏组件,根据当前路由切换预览与退出预览按钮
+ */
 export function Header() {
   const navigate = useNavigate()
   const { pathname } = useLocation()
+  // 当前是否处于预览页
   const isPreview = pathname === "/preview"
   const { setCurComponentId } = useComponentsStore()
   return (
@@ -16,6 +23,7 @@ export function Header() {
             <Button
               type="primary"
               onClick={() => {
+                // 进入预览前清空选中组件,避免预览页残留选中态
                 setCurComponentId(null)
                 navigate("/preview")
               }}

@@ -1,3 +1,6 @@
+/**
+ * @file 「消息提示」动作的配置表单:配置事件触发时弹出的提示类型(成功/失败)与文本。
+ */
 import { Form, Input, Select } from "antd"
 import { useComponentsStore } from "../../../../../../stores/components"
 import { useState } from "react"
@@ -5,16 +8,25 @@ import { useState } from "react"
 export interface ShowMessageConfig {
   type: "showMessage"
   config: {
+    /** 提示类型 */
     type: "success" | "error"
+    /** 提示文本 */
     text: string
   }
 }
 
 interface ShowMessageProps {
+  /** 已保存的配置,用于回填 */
   value?: ShowMessageConfig["config"]
   onChange?: (value: ShowMessageConfig) => void
 }
 
+/**
+ * 「消息提示」动作的配置表单
+ * @param props - 组件属性
+ * @param props.value - 已保存的配置,用于回填
+ * @param props.onChange - 配置变更回调
+ */
 export const ShowMessage = ({ value, onChange }: ShowMessageProps) => {
   const { curComponentId } = useComponentsStore()
   const [type, setType] = useState(value?.type || "success")

@@ -1,3 +1,8 @@
+/**
+ * @file 物料注册表:集中管理所有可用物料的元信息与渲染组件。
+ * 每个物料同时登记 dev(编辑器画布内的可视化编辑版本)与 prod(预览/运行时的真实渲染版本)两套组件,
+ * 并声明其默认属性、属性/样式配置项(setter)、可绑定事件、可被调用的方法,以及允许拖入的子物料(accept)。
+ */
 import { create } from "zustand"
 import { ComponentType } from "react"
 import { Page as PageDev } from "../materials/Page/dev"
@@ -18,46 +23,71 @@ import { TableColumn as TableColumnProd } from "../materials/TableColumn/prod"
 import { Form as FormProd } from "../materials/Form/prod"
 import { FormItem as FormItemProd } from "../materials/FormItem/prod"
 
+/** 属性/样式配置项:描述设置面板里如何渲染某个属性的编辑控件 */
 export interface ComponentSetter {
+  /** 对应组件 props 的字段名 */
   name: string
+  /** 表单项标题 */
   label: string
+  /** 控件类型,如 input / select / inputNumber */
   type: string
-  // setter 支持任意扩展字段(options、placeholder 等),保留 any 逃逸口。
+  /**
+   * setter 支持任意扩展字段(options、placeholder 等),保留 any 逃逸口。
+   */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
 }
 
+/** 组件可绑定的事件(如 onClick),在事件设置 Tab 中展示 */
 export interface ComponentEvent {
+  /** 事件名(对应 props 字段) */
   name: string
+  /** 事件中文名 */
   label: string
 }
 
+/** 组件对外暴露、可被其他组件事件动作调用的方法(如 Modal 的 open) */
 export interface ComponentMethod {
+  /** 方法名 */
   name: string
+  /** 方法中文名 */
   label: string
 }
 
+/** 单个物料的完整配置 */
 export interface ComponentConfig {
+  /** 物料唯一名(注册表的 key) */
   name: string
+  /** 拖入画布时的默认属性 */
   defaultProps: Record<string, unknown>
+  /** 中文描述 */
   desc: string
+  /** 属性配置项 */
   setter?: ComponentSetter[]
+  /** 样式配置项 */
   stylesSetter?: ComponentSetter[]
+  /** 可绑定事件 */
   events?: ComponentEvent[]
+  /** 可被调用的方法 */
   methods?: ComponentMethod[]
-  // 物料的 dev/prod 渲染组件,props 形态随物料而异。
+  /**
+   * 物料的 dev/prod 渲染组件,props 形态随物料而异。
+   */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dev: ComponentType<any>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   prod: ComponentType<any>
+  /** 允许作为子级拖入的物料名(容器类物料才有) */
   accept?: ComponentConfig["name"][]
 }
 
 interface State {
+  /** 物料名 → 配置 */
   componentConfig: { [key: string]: ComponentConfig }
 }
 
 interface Action {
+  /** 运行时动态注册新物料 */
   registerComponent: (name: string, componentConfig: ComponentConfig) => void
 }
 

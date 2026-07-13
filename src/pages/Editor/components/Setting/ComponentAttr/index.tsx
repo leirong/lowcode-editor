@@ -3,6 +3,10 @@ import { ComponentProps, useComponentsStore } from '../../../../../stores/compon
 import { ComponentSetter, useComponentConfigStore } from '../../../../../stores/componentConfig'
 import { useEffect } from 'react'
 
+/**
+ * 属性设置面板:根据当前选中组件的配置(setter)动态渲染属性表单,
+ * 表单改动实时写回组件树 store(updateComponentProps)。
+ */
 export function ComponentAttr() {
   const [form] = Form.useForm()
 
@@ -11,14 +15,21 @@ export function ComponentAttr() {
   const { componentConfig } = useComponentConfigStore()
 
   useEffect(() => {
+    // 切换选中组件时,用其已有 props 回填表单
     const data = form.getFieldsValue()
     form.setFieldsValue({ ...data, ...curComponent?.props })
   }, [curComponent])
 
   if (!curComponentId || !curComponent) return null
 
+  // 从组件配置里取出该组件的属性 setter 列表(决定渲染哪些表单项)
   const { setter = [] } = componentConfig[curComponent.name]
 
+  /**
+   * 按 setter 的类型渲染对应的表单控件(下拉框 / 输入框)
+   * @param setting - 属性 setter 配置
+   * @returns 对应类型的表单控件
+   */
   const renderFormItemChildren = (setting: ComponentSetter) => {
     const { type, options } = setting
     if (type === 'select') {
@@ -28,6 +39,10 @@ export function ComponentAttr() {
     }
   }
 
+  /**
+   * 表单值变化时,把变更写回组件 props
+   * @param changeValues - 变更的属性值
+   */
   function valueChange(changeValues: ComponentProps) {
     if (curComponentId) {
       updateComponentProps(curComponentId, changeValues)
@@ -41,6 +56,7 @@ export function ComponentAttr() {
       wrapperCol={{ span: 14 }}
       onValuesChange={valueChange}
     >
+      {/* 组件的固定信息(id / 名称 / 描述),只读展示 */}
       <Form.Item label='组件id'>
         <Input
           value={curComponent.id}
@@ -59,6 +75,7 @@ export function ComponentAttr() {
           disabled
         />
       </Form.Item>
+      {/* 按配置的 setter 动态渲染可编辑的属性表单项 */}
       {setter.map((item) => {
         return (
           <Form.Item

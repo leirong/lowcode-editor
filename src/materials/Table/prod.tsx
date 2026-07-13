@@ -1,3 +1,7 @@
+/**
+ * @file Table 物料的生产态(prod)组件:预览/运行时的真实表格。
+ * 会根据配置的 url 请求远程数据填充表格,并按列的 type 做渲染(如日期格式化)。
+ */
 import { Table as AntdTable } from "antd"
 import React, {
   PropsWithChildren,
@@ -10,15 +14,26 @@ import axios from "axios"
 import dayjs from "dayjs"
 
 interface TableProps extends CommonComponentProps, PropsWithChildren {
+  /** 数据接口地址 */
   url: string
 }
 
+/** 从 TableColumn 子节点上读取的列配置字段 */
 interface TableColumnProps {
   title: string
   dataIndex: string
+  /** 列类型,date 时对值做日期格式化 */
   type?: string
 }
 
+/**
+ * Table 物料的生产态(prod)组件,请求远程数据并渲染真实表格
+ * @param props - 组件属性
+ * @param props.id - 组件 id
+ * @param props.children - 子节点(TableColumn)
+ * @param props.url - 数据接口地址
+ * @param props.styles - 组件样式
+ */
 export function Table({ id, children, url, styles }: TableProps) {
   const [dataSource, setDataSource] = useState<Array<Record<string, unknown>>>(
     []
@@ -26,6 +41,7 @@ export function Table({ id, children, url, styles }: TableProps) {
 
   const [loading, setLoading] = useState(false)
 
+  // 请求接口数据填充表格
   const getData = async () => {
     if (url) {
       setLoading(true)
@@ -42,6 +58,7 @@ export function Table({ id, children, url, styles }: TableProps) {
     getData()
   }, [url])
 
+  // 将 TableColumn 子节点转换为 antd columns;date 类型列用 dayjs 格式化展示
   const columns = useMemo(() => {
     return (
       React.Children.map(children, (item) => {
