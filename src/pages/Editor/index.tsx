@@ -1,8 +1,8 @@
 import { Allotment } from "allotment"
 import "allotment/dist/style.css"
-import { MaterialWrapper } from "../../components/Material"
-import { EditArea } from "../../components/EditArea"
-import { Setting } from "../../components/Setting"
+import { MaterialWrapper } from "./components/Material"
+import { EditArea } from "./components/EditArea"
+import { Setting } from "./components/Setting"
 
 export const Editor = () => {
   return (
