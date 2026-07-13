@@ -1,4 +1,4 @@
-export { Editor } from "./Editor"
+export { Layout } from "./Layout"
 export { EditArea } from "./EditArea"
 export { Header } from "./Header"
 export { MaterialWrapper as Material } from "./Material"

@@ -2,7 +2,7 @@ import { ReactNode, createElement, useRef } from 'react'
 import { Component, useComponentsStore } from '../../stores/components'
 import { useComponentConfigStore } from '../../stores/componentConfig'
 import { message } from 'antd'
-import { ActionConfig } from '../Setting/ActionModal'
+import { ActionConfig } from '../../components/Setting/ActionModal'
 
 export function Preview() {
   const { components } = useComponentsStore()

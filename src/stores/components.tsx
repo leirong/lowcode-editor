@@ -20,7 +20,6 @@ interface State {
   curComponentId?: number | null
   curComponent: Component | null
   components: Component[]
-  mode: "edit" | "preview"
 }
 
 interface Action {
@@ -33,7 +32,6 @@ interface Action {
     replace?: boolean
   ) => void
   setCurComponentId: (componentId: number | null) => void
-  setMode: (mode: State["mode"]) => void
 }
 
 const creator: StateCreator<Action & State> = (set, get) => ({
@@ -99,8 +97,6 @@ const creator: StateCreator<Action & State> = (set, get) => ({
       return { components: [...state.components] }
     })
   },
-  mode: "edit",
-  setMode: (mode) => set({ mode }),
 })
 
 export const useComponentsStore = create<Action & State>()(
