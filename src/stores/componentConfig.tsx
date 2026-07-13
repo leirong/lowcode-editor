@@ -3,8 +3,8 @@
  * 每个物料同时登记 dev(编辑器画布内的可视化编辑版本)与 prod(预览/运行时的真实渲染版本)两套组件,
  * 并声明其默认属性、属性/样式配置项(setter)、可绑定事件、可被调用的方法,以及允许拖入的子物料(accept)。
  */
-import { create } from "zustand"
-import { ComponentType } from "react"
+import { create } from 'zustand'
+import { ComponentType } from 'react'
 import {
   PageDev,
   ContainerDev,
@@ -22,7 +22,7 @@ import {
   TableColumnProd,
   FormProd,
   FormItemProd,
-} from "@/materials"
+} from '@/materials'
 
 /** 属性/样式配置项:描述设置面板里如何渲染某个属性的编辑控件 */
 export interface ComponentSetter {
@@ -35,7 +35,6 @@ export interface ComponentSetter {
   /**
    * setter 支持任意扩展字段(options、placeholder 等),保留 any 逃逸口。
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
 }
 
@@ -74,12 +73,10 @@ export interface ComponentConfig {
   /**
    * 物料的 dev/prod 渲染组件,props 形态随物料而异。
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dev: ComponentType<any>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   prod: ComponentType<any>
   /** 允许作为子级拖入的物料名(容器类物料才有) */
-  accept?: ComponentConfig["name"][]
+  accept?: ComponentConfig['name'][]
 }
 
 interface State {
@@ -95,250 +92,250 @@ interface Action {
 export const useComponentConfigStore = create<State & Action>((set) => ({
   componentConfig: {
     Page: {
-      name: "Page",
+      name: 'Page',
       defaultProps: {},
-      desc: "页面",
+      desc: '页面',
       dev: PageDev,
       prod: PageProd,
-      accept: ["Container", "Button", "Modal", "Table", "Form"],
+      accept: ['Container', 'Button', 'Modal', 'Table', 'Form'],
     },
     Container: {
-      name: "Container",
+      name: 'Container',
       defaultProps: {},
-      desc: "容器",
+      desc: '容器',
       dev: ContainerDev,
       prod: ContainerProd,
-      accept: ["Button", "Modal", "Container", "Table", "Form"],
+      accept: ['Button', 'Modal', 'Container', 'Table', 'Form'],
     },
     Button: {
-      name: "Button",
+      name: 'Button',
       defaultProps: {
-        type: "primary",
-        text: "按钮",
+        type: 'primary',
+        text: '按钮',
       },
       setter: [
         {
-          name: "type",
-          label: "按钮类型",
-          type: "select",
+          name: 'type',
+          label: '按钮类型',
+          type: 'select',
           options: [
             {
-              label: "主按钮",
-              value: "primary",
+              label: '主按钮',
+              value: 'primary',
             },
             {
-              label: "次按钮",
-              value: "default",
+              label: '次按钮',
+              value: 'default',
             },
             {
-              label: "虚线按钮",
-              value: "dashed",
+              label: '虚线按钮',
+              value: 'dashed',
             },
             {
-              label: "文本按钮",
-              value: "text",
+              label: '文本按钮',
+              value: 'text',
             },
             {
-              label: "链接按钮",
-              value: "link",
+              label: '链接按钮',
+              value: 'link',
             },
           ],
         },
         {
-          name: "text",
-          label: "文本",
-          type: "input",
+          name: 'text',
+          label: '文本',
+          type: 'input',
         },
       ],
       stylesSetter: [
         {
-          name: "width",
-          label: "宽度",
-          type: "inputNumber",
+          name: 'width',
+          label: '宽度',
+          type: 'inputNumber',
         },
         {
-          name: "height",
-          label: "高度",
-          type: "inputNumber",
+          name: 'height',
+          label: '高度',
+          type: 'inputNumber',
         },
       ],
       events: [
         {
-          name: "onClick",
-          label: "点击事件",
+          name: 'onClick',
+          label: '点击事件',
         },
         {
-          name: "onDoubleClick",
-          label: "双击事件",
+          name: 'onDoubleClick',
+          label: '双击事件',
         },
       ],
-      desc: "按钮",
+      desc: '按钮',
       dev: ButtonDev,
       prod: ButtonProd,
     },
     Modal: {
-      name: "Modal",
+      name: 'Modal',
       defaultProps: {
-        title: "弹窗",
+        title: '弹窗',
       },
       setter: [
         {
-          name: "title",
-          label: "标题",
-          type: "input",
+          name: 'title',
+          label: '标题',
+          type: 'input',
         },
       ],
       stylesSetter: [],
       events: [
         {
-          name: "onOk",
-          label: "确认事件",
+          name: 'onOk',
+          label: '确认事件',
         },
         {
-          name: "onCancel",
-          label: "取消事件",
+          name: 'onCancel',
+          label: '取消事件',
         },
       ],
       methods: [
         {
-          name: "open",
-          label: "打开弹窗",
+          name: 'open',
+          label: '打开弹窗',
         },
         {
-          name: "close",
-          label: "关闭弹窗",
+          name: 'close',
+          label: '关闭弹窗',
         },
       ],
-      desc: "弹窗",
+      desc: '弹窗',
       dev: ModalDev,
       prod: ModalProd,
-      accept: ["Button", "Container", "Table", "Form"],
+      accept: ['Button', 'Container', 'Table', 'Form'],
     },
     Table: {
-      name: "Table",
+      name: 'Table',
       defaultProps: {},
-      desc: "表格",
+      desc: '表格',
       dev: TableDev,
       prod: TableProd,
-      accept: ["TableColumn"],
+      accept: ['TableColumn'],
       setter: [
         {
-          name: "url",
-          label: "接口地址",
-          type: "input",
+          name: 'url',
+          label: '接口地址',
+          type: 'input',
         },
       ],
     },
     TableColumn: {
-      name: "TableColumn",
+      name: 'TableColumn',
       defaultProps: {
         dataIndex: `col_${new Date().getTime()}`,
-        title: "列名",
+        title: '列名',
       },
-      desc: "表格列",
+      desc: '表格列',
       dev: TableColumnDev,
       prod: TableColumnProd,
       setter: [
         {
-          name: "type",
-          label: "类型",
-          type: "select",
+          name: 'type',
+          label: '类型',
+          type: 'select',
           options: [
             {
-              label: "文本",
-              value: "text",
+              label: '文本',
+              value: 'text',
             },
             {
-              label: "日期",
-              value: "date",
+              label: '日期',
+              value: 'date',
             },
           ],
         },
         {
-          name: "title",
-          label: "标题",
-          type: "input",
+          name: 'title',
+          label: '标题',
+          type: 'input',
         },
         {
-          name: "dataIndex",
-          label: "字段",
-          type: "input",
+          name: 'dataIndex',
+          label: '字段',
+          type: 'input',
         },
       ],
     },
     Form: {
-      name: "Form",
+      name: 'Form',
       defaultProps: {},
-      desc: "表单",
+      desc: '表单',
       setter: [
         {
-          name: "title",
-          label: "标题",
-          type: "input",
+          name: 'title',
+          label: '标题',
+          type: 'input',
         },
       ],
       events: [
         {
-          name: "onFinish",
-          label: "提交事件",
+          name: 'onFinish',
+          label: '提交事件',
         },
       ],
       methods: [
         {
-          name: "submit",
-          label: "提交",
+          name: 'submit',
+          label: '提交',
         },
       ],
       dev: FormDev,
       prod: FormProd,
     },
     FormItem: {
-      name: "FormItem",
+      name: 'FormItem',
       defaultProps: {
         name: new Date().getTime(),
-        label: "姓名",
-        type: "input",
+        label: '姓名',
+        type: 'input',
         rules: {
           required: false,
         },
       },
-      desc: "表单项",
+      desc: '表单项',
       dev: FormItemDev,
       prod: FormItemProd,
       setter: [
         {
-          name: "type",
-          label: "类型",
-          type: "select",
+          name: 'type',
+          label: '类型',
+          type: 'select',
           options: [
             {
-              label: "输入框",
-              value: "input",
+              label: '输入框',
+              value: 'input',
             },
             {
-              label: "日期",
-              value: "date",
+              label: '日期',
+              value: 'date',
             },
           ],
         },
         {
-          name: "label",
-          label: "标题",
-          type: "input",
+          name: 'label',
+          label: '标题',
+          type: 'input',
         },
         {
-          name: "name",
-          label: "字段",
-          type: "input",
+          name: 'name',
+          label: '字段',
+          type: 'input',
         },
         {
-          name: "rules",
-          label: "校验",
-          type: "select",
+          name: 'rules',
+          label: '校验',
+          type: 'select',
           options: [
             {
-              label: "必填",
-              value: "required",
+              label: '必填',
+              value: 'required',
             },
           ],
         },

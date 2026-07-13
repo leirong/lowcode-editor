@@ -2,14 +2,13 @@
  * @file 组件树状态管理:维护页面的组件树、当前选中组件,并提供增删改查方法。
  * 使用 zustand + persist,组件树会持久化到 localStorage,刷新后不丢失。
  */
-import { CSSProperties } from "react"
-import { StateCreator, create } from "zustand"
-import { persist } from "zustand/middleware"
+import { CSSProperties } from 'react'
+import { StateCreator, create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 /**
  * 低代码组件的 props / styles 由用户在运行时配置,天然是动态结构,此处保留 any 逃逸口。
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ComponentProps = Record<string, any>
 
 /** 组件树中的单个节点 */
@@ -50,7 +49,7 @@ interface Action {
     componentId: number,
     styles: CSSProperties,
     /** 是否整体替换样式(否则为合并) */
-    replace?: boolean
+    replace?: boolean,
   ) => void
   /** 设置当前选中组件 */
   setCurComponentId: (componentId: number | null) => void
@@ -72,7 +71,7 @@ const creator: StateCreator<Action & State> = (set, get) => ({
       curComponentId: componentId,
     })),
   // 初始组件树只有一个根节点 Page
-  components: [{ id: 1, name: "Page", props: {}, desc: "页面" }],
+  components: [{ id: 1, name: 'Page', props: {}, desc: '页面' }],
   addComponent: (component, parentId) =>
     set((state) => {
       // 指定了父级则挂到父级的 children 下,否则作为顶层组件
@@ -95,14 +94,9 @@ const creator: StateCreator<Action & State> = (set, get) => ({
     const component = getComponentById(componentId, get().components)
     // 从父组件的 children 中过滤掉该组件
     if (component?.parentId) {
-      const parentComponent = getComponentById(
-        component.parentId,
-        get().components
-      )
+      const parentComponent = getComponentById(component.parentId, get().components)
       if (parentComponent) {
-        parentComponent.children = parentComponent?.children?.filter(
-          (item) => item.id !== +componentId
-        )
+        parentComponent.children = parentComponent?.children?.filter((item) => item.id !== +componentId)
         set({ components: [...get().components] })
       }
     }
@@ -123,9 +117,7 @@ const creator: StateCreator<Action & State> = (set, get) => ({
       const component = getComponentById(componentId, state.components)
       if (component) {
         // replace 为 true 时整体替换(用于 CSS 编辑器覆盖),否则与原样式合并
-        component.styles = replace
-          ? { ...styles }
-          : { ...(component.styles || {}), ...styles }
+        component.styles = replace ? { ...styles } : { ...(component.styles || {}), ...styles }
         return { components: [...state.components] }
       }
       return { components: [...state.components] }
@@ -136,8 +128,8 @@ const creator: StateCreator<Action & State> = (set, get) => ({
 /** persist 中间件:以 name 为 key 将组件树缓存到 localStorage */
 export const useComponentsStore = create<Action & State>()(
   persist(creator, {
-    name: "lowcode-editor-store",
-  })
+    name: 'lowcode-editor-store',
+  }),
 )
 
 /**
@@ -146,10 +138,7 @@ export const useComponentsStore = create<Action & State>()(
  * @param components - 待查找的组件树(或子树)
  * @returns 匹配的组件对象,未找到时返回 null
  */
-export function getComponentById(
-  id: number | null,
-  components: Component[]
-): Component | null {
+export function getComponentById(id: number | null, components: Component[]): Component | null {
   if (!id) return null
 
   for (const component of components) {
