@@ -1,6 +1,5 @@
 import { Form, Input, Select } from 'antd'
-import { ComponentProps, useComponentsStore } from '@/stores/components'
-import { ComponentSetter, useComponentConfigStore } from '@/stores/componentConfig'
+import { ComponentProps, useComponentsStore, ComponentSetter, useComponentConfigStore } from '@/stores'
 import { useEffect } from 'react'
 
 /**

@@ -2,7 +2,7 @@
  * @file Container 物料的 dev(编辑态)组件
  */
 import { PropsWithChildren, useEffect, useRef } from 'react'
-import { useComponentConfigStore } from '@/stores/componentConfig'
+import { useComponentConfigStore } from '@/stores'
 import classNames from 'classnames'
 import { useItemDrop } from '../useItemDrop'
 import { useDrag } from 'react-dnd'

@@ -1,5 +1,5 @@
 import { Segmented } from "antd"
-import { useComponentsStore } from "@/stores/components"
+import { useComponentsStore } from "@/stores"
 import { useState } from "react"
 import { ComponentAttr } from "./ComponentAttr"
 import { ComponentStyle } from "./ComponentStyle"

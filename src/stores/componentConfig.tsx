@@ -5,23 +5,24 @@
  */
 import { create } from "zustand"
 import { ComponentType } from "react"
-import { Page as PageDev } from "@/materials/Page/dev"
-import { Container as ContainerDev } from "@/materials/Container/dev"
-import { Button as ButtonDev } from "@/materials/Button/dev"
-import { Modal as ModalDev } from "@/materials/Modal/dev"
-import { Table as TableDev } from "@/materials/Table/dev"
-import { TableColumn as TableColumnDev } from "@/materials/TableColumn/dev"
-import { Form as FormDev } from "@/materials/Form/dev"
-import { FormItem as FormItemDev } from "@/materials/FormItem/dev"
-
-import { Page as PageProd } from "@/materials/Page/prod"
-import { Container as ContainerProd } from "@/materials/Container/prod"
-import { Button as ButtonProd } from "@/materials/Button/prod"
-import { Modal as ModalProd } from "@/materials/Modal/prod"
-import { Table as TableProd } from "@/materials/Table/prod"
-import { TableColumn as TableColumnProd } from "@/materials/TableColumn/prod"
-import { Form as FormProd } from "@/materials/Form/prod"
-import { FormItem as FormItemProd } from "@/materials/FormItem/prod"
+import {
+  PageDev,
+  ContainerDev,
+  ButtonDev,
+  ModalDev,
+  TableDev,
+  TableColumnDev,
+  FormDev,
+  FormItemDev,
+  PageProd,
+  ContainerProd,
+  ButtonProd,
+  ModalProd,
+  TableProd,
+  TableColumnProd,
+  FormProd,
+  FormItemProd,
+} from "@/materials"
 
 /** 属性/样式配置项:描述设置面板里如何渲染某个属性的编辑控件 */
 export interface ComponentSetter {

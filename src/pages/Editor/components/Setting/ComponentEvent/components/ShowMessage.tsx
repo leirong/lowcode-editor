@@ -2,7 +2,7 @@
  * @file 「消息提示」动作的配置表单:配置事件触发时弹出的提示类型(成功/失败)与文本。
  */
 import { Form, Input, Select } from "antd"
-import { useComponentsStore } from "@/stores/components"
+import { useComponentsStore } from "@/stores"
 import { useState } from "react"
 
 export interface ShowMessageConfig {

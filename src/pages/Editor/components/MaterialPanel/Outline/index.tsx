@@ -2,7 +2,7 @@
  * @file 大纲面板:用树形结构展示整棵组件树,点击节点即选中对应组件(同步 curComponentId)。
  */
 import { Tree } from 'antd'
-import { useComponentsStore } from '@/stores/components'
+import { useComponentsStore } from '@/stores'
 
 export function Outline() {
   const { components, setCurComponentId } = useComponentsStore()

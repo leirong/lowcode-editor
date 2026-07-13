@@ -2,7 +2,7 @@
  * @file 物料列表:读取物料注册表,渲染出所有可拖拽的物料项(排除根组件 Page)。
  */
 import { useMemo } from 'react'
-import { useComponentConfigStore } from '@/stores/componentConfig'
+import { useComponentConfigStore } from '@/stores'
 import { DragItem } from '../DragItem'
 
 export function MaterialList() {

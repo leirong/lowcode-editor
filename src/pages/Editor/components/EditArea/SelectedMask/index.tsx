@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { createPortal } from "react-dom"
-import { getComponentById, useComponentsStore } from "@/stores/components"
+import { getComponentById, useComponentsStore } from "@/stores"
 import { Dropdown, Popconfirm, Space } from "antd"
 import { DeleteOutlined } from "@ant-design/icons"
 

@@ -2,7 +2,7 @@
  * @file Page 物料的 dev(编辑态)组件:编辑器画布的根容器
  */
 import { PropsWithChildren } from 'react'
-import { useComponentConfigStore } from '@/stores/componentConfig'
+import { useComponentConfigStore } from '@/stores'
 import { useItemDrop } from '../useItemDrop'
 
 /**
