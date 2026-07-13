@@ -1,3 +1,8 @@
+allowBuilds:
+  '@swc/core': true
+  esbuild: true
+minimumReleaseAgeExclude:
+  - antd@6.5.1
 onlyBuiltDependencies:
   - "@swc/core"
   - esbuild
