@@ -3,7 +3,7 @@
  */
 import { Button, Space } from "antd"
 import { useLocation, useNavigate } from "react-router-dom"
-import { useComponentsStore } from "../../stores/components"
+import { useComponentsStore } from "@/stores/components"
 
 /**
  * 顶部标题栏组件,根据当前路由切换预览与退出预览按钮

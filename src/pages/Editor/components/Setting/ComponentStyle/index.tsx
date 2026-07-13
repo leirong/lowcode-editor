@@ -1,10 +1,10 @@
 import { Form, InputNumber, Select } from 'antd'
-import { useComponentsStore } from '../../../../../stores/components'
-import { ComponentSetter, useComponentConfigStore } from '../../../../../stores/componentConfig'
+import { useComponentsStore } from '@/stores/components'
+import { ComponentSetter, useComponentConfigStore } from '@/stores/componentConfig'
 import { CSSProperties, useEffect, useState } from 'react'
 import { CssEditor } from '../CssEditor'
 import { debounce } from 'lodash-es'
-import { styleToObject, objectToStyle } from '../../../../../utils/css'
+import { styleToObject, objectToStyle } from '@/utils/css'
 
 /**
  * 样式设置面板:根据配置的 stylesSetter 渲染表单式样式项,

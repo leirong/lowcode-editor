@@ -3,7 +3,7 @@
  * 预览态触发时,Preview 通过 window.location.href = url 执行跳转。
  */
 import { Form, Input } from "antd"
-import { useComponentsStore } from "../../../../../../stores/components"
+import { useComponentsStore } from "@/stores/components"
 import { useState } from "react"
 const TextArea = Input.TextArea
 

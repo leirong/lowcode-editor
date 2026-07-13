@@ -3,9 +3,9 @@
  * 预览态触发事件时,Preview 会通过组件 ref 调用所选方法。
  */
 import { Form, Select, TreeSelect } from 'antd'
-import { Component, getComponentById, useComponentsStore } from '../../../../../../stores/components'
+import { Component, getComponentById, useComponentsStore } from '@/stores/components'
 import { useEffect, useState } from 'react'
-import { useComponentConfigStore } from '../../../../../../stores/componentConfig'
+import { useComponentConfigStore } from '@/stores/componentConfig'
 
 export interface ComponentMethodConfig {
   type: 'componentMethod'

@@ -4,7 +4,7 @@
  */
 import MonacoEditor, { OnMount } from "@monaco-editor/react"
 import { useState } from "react"
-import { useComponentsStore } from "../../../../../../stores/components"
+import { useComponentsStore } from "@/stores/components"
 import { Form } from "antd"
 export interface CustomJSConfig {
   type: "customJS"

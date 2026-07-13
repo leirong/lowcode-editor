@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { createPortal } from "react-dom"
-import { getComponentById, useComponentsStore } from "../../../../../stores/components"
+import { getComponentById, useComponentsStore } from "@/stores/components"
 
 interface HoverMaskProps {
   containerClassName: string

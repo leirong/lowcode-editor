@@ -3,8 +3,8 @@
  * 并根据物料配置把用户设置的事件动作(跳转/提示/自定义JS/调用组件方法)绑定到组件上。
  */
 import { ReactNode, createElement, useRef } from 'react'
-import { Component, useComponentsStore } from '../../stores/components'
-import { useComponentConfigStore } from '../../stores/componentConfig'
+import { Component, useComponentsStore } from '@/stores/components'
+import { useComponentConfigStore } from '@/stores/componentConfig'
 import { message } from 'antd'
 import { ActionConfig } from '../Editor/components/Setting/ActionModal'
 

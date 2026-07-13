@@ -1,6 +1,6 @@
 import { Button, Collapse } from 'antd'
-import { useComponentConfigStore } from '../../../../../stores/componentConfig'
-import { getComponentById, useComponentsStore } from '../../../../../stores/components'
+import { useComponentConfigStore } from '@/stores/componentConfig'
+import { getComponentById, useComponentsStore } from '@/stores/components'
 import { ActionModal, ActionConfig } from '../ActionModal'
 import { useState } from 'react'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'

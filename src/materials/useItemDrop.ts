@@ -1,6 +1,6 @@
 import { useDrop } from 'react-dnd'
-import { useComponentConfigStore } from '../stores/componentConfig'
-import { getComponentById, useComponentsStore } from '../stores/components'
+import { useComponentConfigStore } from '@/stores/componentConfig'
+import { getComponentById, useComponentsStore } from '@/stores/components'
 import { message } from 'antd'
 
 /**

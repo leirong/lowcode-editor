@@ -1,15 +1,15 @@
 import { Modal, Segmented } from "antd"
 import { useEffect, useState } from "react"
-import { GoToLink, GoToLinkConfig } from "../ComponentEvent/actions/go-to-link"
+import { GoToLink, GoToLinkConfig } from "../ComponentEvent/components/GoToLink"
 import {
   ShowMessage,
   ShowMessageConfig,
-} from "../ComponentEvent/actions/show-message"
-import { CustomJS, CustomJSConfig } from "../ComponentEvent/actions/custom-js"
+} from "../ComponentEvent/components/ShowMessage"
+import { CustomJS, CustomJSConfig } from "../ComponentEvent/components/CustomJS"
 import {
   ComponentMethod,
   ComponentMethodConfig,
-} from "../ComponentEvent/actions/component-method"
+} from "../ComponentEvent/components/ComponentMethod"
 
 /** 动作配置的联合类型:四种动作各自的配置结构 */
 export type ActionConfig =

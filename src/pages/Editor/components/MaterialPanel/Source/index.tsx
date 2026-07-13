@@ -1,5 +1,5 @@
 import MonacoEditor, { OnMount } from "@monaco-editor/react"
-import { useComponentsStore } from "../../../../../stores/components"
+import { useComponentsStore } from "@/stores/components"
 
 /**
  * 源码视图:以只读 JSON 形式展示当前组件树,便于查看/调试整体结构

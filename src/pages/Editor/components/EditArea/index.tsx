@@ -1,6 +1,6 @@
 import { MouseEventHandler, ReactNode, createElement, useState } from 'react'
-import { Component, useComponentsStore } from '../../../../stores/components'
-import { useComponentConfigStore } from '../../../../stores/componentConfig'
+import { Component, useComponentsStore } from '@/stores/components'
+import { useComponentConfigStore } from '@/stores/componentConfig'
 import { HoverMask } from './HoverMask'
 import { SelectedMask } from './SelectedMask'
 

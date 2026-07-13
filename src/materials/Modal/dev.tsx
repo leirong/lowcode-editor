@@ -3,7 +3,7 @@
  */
 import { PropsWithChildren } from 'react'
 import { useItemDrop } from '../useItemDrop'
-import { useComponentConfigStore } from '../../stores/componentConfig'
+import { useComponentConfigStore } from '@/stores/componentConfig'
 
 /** Modal 物料的 props:在通用 props 基础上增加标题 title */
 interface ModalProps extends CommonComponentProps, PropsWithChildren {
