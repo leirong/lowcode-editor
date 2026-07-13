@@ -13,7 +13,9 @@ function Modal({ id, name, children, title, styles }: ModalProps) {
 
   return (
     <div
-      ref={drop}
+      ref={(node) => {
+        drop(node)
+      }}
       style={styles}
       data-component-id={id}
       className={`min-h-[100px] p-[20px] ${

@@ -1,9 +1,23 @@
 import { Form as AntdForm, DatePicker, Input } from "antd"
 import { useItemDrop } from "../../../hooks/useItemDrop"
-import React, { PropsWithChildren, useEffect, useMemo, useRef } from "react"
+import React, {
+  PropsWithChildren,
+  ReactElement,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react"
 import { useDrag } from "react-dnd"
 interface FormProps extends CommonComponentProps, PropsWithChildren {
-  onFinish: (values: any) => void
+  onFinish: (values: Record<string, unknown>) => void
+}
+
+interface FormItemProps {
+  id: number
+  label: string
+  name: string
+  type: string
+  rules?: string
 }
 const Form = ({ id, name, children, onFinish }: FormProps) => {
   const [form] = AntdForm.useForm()
@@ -27,15 +41,18 @@ const Form = ({ id, name, children, onFinish }: FormProps) => {
   }, [])
 
   const formItems = useMemo(() => {
-    return React.Children.map(children, (item: any) => {
-      return {
-        label: item.props?.label,
-        name: item.props?.name,
-        type: item.props?.type,
-        id: item.props?.id,
-        rules: item.props?.rules,
-      }
-    })
+    return (
+      React.Children.map(children, (item) => {
+        const props = (item as ReactElement<FormItemProps>).props
+        return {
+          label: props?.label,
+          name: props?.name,
+          type: props?.type,
+          id: props?.id,
+          rules: props?.rules,
+        }
+      }) || []
+    )
   }, [children])
 
   return (
@@ -52,7 +69,7 @@ const Form = ({ id, name, children, onFinish }: FormProps) => {
         form={form}
         onFinish={(values) => onFinish?.(values)}
       >
-        {formItems.map((item: any) => {
+        {formItems.map((item) => {
           return (
             <AntdForm.Item
               key={item.name}

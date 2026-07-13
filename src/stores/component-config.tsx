@@ -1,4 +1,5 @@
 import { create } from "zustand"
+import { ComponentType } from "react"
 import PageDev from "../components/material/page/dev"
 import ContainerDev from "../components/material/container/dev"
 import ButtonDev from "../components/material/button/dev"
@@ -21,6 +22,8 @@ export interface ComponentSetter {
   name: string
   label: string
   type: string
+  // setter 支持任意扩展字段(options、placeholder 等),保留 any 逃逸口。
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
 }
 
@@ -36,14 +39,17 @@ export interface ComponentMethod {
 
 export interface ComponentConfig {
   name: string
-  defaultProps: Record<string, any>
+  defaultProps: Record<string, unknown>
   desc: string
   setter?: ComponentSetter[]
   stylesSetter?: ComponentSetter[]
   events?: ComponentEvent[]
   methods?: ComponentMethod[]
-  dev: any
-  prod: any
+  // 物料的 dev/prod 渲染组件,props 形态随物料而异。
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dev: ComponentType<any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  prod: ComponentType<any>
   accept?: ComponentConfig["name"][]
 }
 

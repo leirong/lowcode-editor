@@ -68,7 +68,7 @@ export default function ComponentEvent() {
     updateComponentProps(curComponent.id, {
       [eventName]: {
         actions: curComponent.props[eventName]?.actions?.filter(
-          (_: any, i: number) => i !== index
+          (_: ActionConfig, i: number) => i !== index
         ),
       },
     })

@@ -3,15 +3,23 @@ import dayjs from "dayjs"
 import React, {
   ForwardRefRenderFunction,
   PropsWithChildren,
+  ReactElement,
   forwardRef,
   useImperativeHandle,
   useMemo,
 } from "react"
 interface FormProps extends CommonComponentProps, PropsWithChildren {
-  onFinish: (values: any) => void
+  onFinish: (values: Record<string, unknown>) => void
 }
 export interface FormRef {
   submit: () => void
+}
+interface FormItemProps {
+  id: number
+  label: string
+  name: string
+  type: string
+  rules?: string
 }
 const Form: ForwardRefRenderFunction<FormRef, FormProps> = (
   { children, onFinish },
@@ -32,21 +40,24 @@ const Form: ForwardRefRenderFunction<FormRef, FormProps> = (
   )
 
   const formItems = useMemo(() => {
-    return React.Children.map(children, (item: any) => {
-      return {
-        label: item.props?.label,
-        name: item.props?.name,
-        type: item.props?.type,
-        id: item.props?.id,
-        rules: item.props?.rules,
-      }
-    })
+    return (
+      React.Children.map(children, (item) => {
+        const props = (item as ReactElement<FormItemProps>).props
+        return {
+          label: props?.label,
+          name: props?.name,
+          type: props?.type,
+          id: props?.id,
+          rules: props?.rules,
+        }
+      }) || []
+    )
   }, [children])
 
-  async function save(values: any) {
+  async function save(values: Record<string, unknown>) {
     Object.keys(values).forEach((key) => {
       if (dayjs.isDayjs(values[key])) {
-        values[key] = values[key].format("YYYY-MM-DD")
+        values[key] = (values[key] as dayjs.Dayjs).format("YYYY-MM-DD")
       }
     })
 
@@ -60,7 +71,7 @@ const Form: ForwardRefRenderFunction<FormRef, FormProps> = (
       form={form}
       onFinish={save}
     >
-      {formItems.map((item: any) => {
+      {formItems.map((item) => {
         return (
           <AntdForm.Item
             key={item.name}

@@ -14,11 +14,11 @@ interface GoToLinkProps {
 const GoToLink = ({ value, onChange }: GoToLinkProps) => {
   const { curComponentId, curComponent } = useComponentsStore()
 
-  if (!curComponentId || !curComponent) return null
-
   const [url, setUrl] = useState(value)
 
-  const handleChange = (e: { target: { value: any } }) => {
+  if (!curComponentId || !curComponent) return null
+
+  const handleChange = (e: { target: { value: string } }) => {
     const _url = e.target.value
     setUrl(_url)
     onChange?.({

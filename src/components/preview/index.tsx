@@ -8,7 +8,7 @@ export default function Preview() {
   const { components } = useComponentsStore()
   const { componentConfig } = useComponentConfigStore()
 
-  const componentRefs = useRef<Record<string, any>>({})
+  const componentRefs = useRef<Record<string, unknown>>({})
 
   function handleEvent(component: Component) {
     const { name, props } = component
@@ -17,12 +17,12 @@ export default function Preview() {
     const { events } = config
     if (!events) return
 
-    const componentProps: Record<string, any> = {}
+    const componentProps: Record<string, unknown> = {}
 
     events.forEach((event) => {
       const eventConfig = props[event.name]
       if (eventConfig) {
-        componentProps[event.name] = (...args: any[]) => {
+        componentProps[event.name] = (...args: unknown[]) => {
           eventConfig.actions.forEach((action: ActionConfig) => {
             if (action.type === "goToLink") {
               window.location.href = action.url
@@ -45,8 +45,9 @@ export default function Preview() {
                 args
               )
             } else if (action.type === "componentMethod") {
-              const componentRef =
-                componentRefs.current[action.config.componentId]
+              const componentRef = componentRefs.current[
+                action.config.componentId
+              ] as Record<string, (...args: unknown[]) => void> | undefined
               if (componentRef) {
                 componentRef[action.config.method]?.(...args)
               }
@@ -68,7 +69,7 @@ export default function Preview() {
         key: id,
         id: id,
         name: name,
-        ref: (ref: any) => {
+        ref: (ref: unknown) => {
           componentRefs.current[id] = ref
         },
         ...config.defaultProps,
@@ -89,5 +90,7 @@ export default function Preview() {
     })
   }
 
+  // renderComponents 内部通过 ref 回调写入 componentRefs(渲染后触发),规则对该间接调用误报。
+  // eslint-disable-next-line react-hooks/refs
   return <div>{renderComponents(components)}</div>
 }

@@ -59,6 +59,8 @@ const HoverMask = ({
   }
 
   useEffect(() => {
+    // 依据当前组件位置测量 DOM 并更新遮罩位置,属于与外部(DOM)同步。
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     updatePosition()
   }, [componentId, components])
 

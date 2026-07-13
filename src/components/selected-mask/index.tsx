@@ -41,7 +41,7 @@ function SelectedMask({
       container.getBoundingClientRect()
 
     let labelTop = top - containerTop + container.scrollTop
-    let labelLeft = left - containerLeft + width
+    const labelLeft = left - containerLeft + width
 
     if (labelTop <= 0) {
       labelTop -= -20

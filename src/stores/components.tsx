@@ -1,11 +1,16 @@
 import { CSSProperties } from "react"
 import { StateCreator, create } from "zustand"
 import { persist } from "zustand/middleware"
+
+// 低代码组件的 props / styles 由用户在运行时配置,天然是动态结构,此处保留 any 逃逸口。
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ComponentProps = Record<string, any>
+
 export interface Component {
   id: number
   name: string
   desc: string
-  props: any
+  props: ComponentProps
   styles?: CSSProperties
   children?: Component[]
   parentId?: number
@@ -21,10 +26,10 @@ interface State {
 interface Action {
   addComponent: (component: Component, parentId?: number) => void
   deleteComponent: (componentId: number) => void
-  updateComponentProps: (componentId: number, props: any) => void
+  updateComponentProps: (componentId: number, props: ComponentProps) => void
   updateComponentStyles: (
     componentId: number,
-    styles: any,
+    styles: CSSProperties,
     replace?: boolean
   ) => void
   setCurComponentId: (componentId: number | null) => void

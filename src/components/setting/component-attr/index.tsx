@@ -1,7 +1,6 @@
 import { Form, Input, Select } from "antd"
-import { useComponentsStore } from "../../../stores/components"
+import { ComponentProps, useComponentsStore } from "../../../stores/components"
 import {
-  ComponentConfig,
   ComponentSetter,
   useComponentConfigStore,
 } from "../../../stores/component-config"
@@ -33,7 +32,7 @@ export default function ComponentAttr() {
     }
   }
 
-  function valueChange(changeValues: ComponentConfig) {
+  function valueChange(changeValues: ComponentProps) {
     if (curComponentId) {
       updateComponentProps(curComponentId, changeValues)
     }

@@ -1,11 +1,10 @@
 import { Form, InputNumber, Select } from "antd"
 import { useComponentsStore } from "../../../stores/components"
 import {
-  ComponentConfig,
   ComponentSetter,
   useComponentConfigStore,
 } from "../../../stores/component-config"
-import { useEffect, useState } from "react"
+import { CSSProperties, useEffect, useState } from "react"
 import CssEditor from "../css-editor"
 import { debounce } from "lodash-es"
 import { styleToObject, objectToStyle } from "../../../utils/css"
@@ -24,6 +23,8 @@ export default function ComponentStyle() {
     form.resetFields()
     const data = form.getFieldsValue()
     form.setFieldsValue({ ...data, ...curComponent?.styles })
+    // 切换选中组件时,用其已有 styles 回填表单与 CSS 编辑器。
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCss(objectToStyle(curComponent?.styles || {}))
   }, [curComponent])
 
@@ -40,7 +41,7 @@ export default function ComponentStyle() {
     }
   }
 
-  function valueChange(changeValues: ComponentConfig) {
+  function valueChange(changeValues: CSSProperties) {
     if (curComponentId) {
       updateComponentStyles(curComponentId, changeValues)
     }

@@ -1,6 +1,6 @@
-import { Button as AntdButton } from "antd"
-import { ButtonType } from "antd/es/button"
-import { CSSProperties } from "react"
+import { Button as AntdButton } from 'antd'
+import { ButtonType } from 'antd/es/button'
+import { CSSProperties } from 'react'
 
 export interface ButtonProps {
   id: number
@@ -10,9 +10,13 @@ export interface ButtonProps {
 }
 
 const Button = (props: ButtonProps) => {
-  const { id, styles, type, text, ...rest } = props
+  const { id: _id, styles, type, text, ...rest } = props
   return (
-    <AntdButton type={type} style={styles} {...rest}>
+    <AntdButton
+      type={type}
+      style={styles}
+      {...rest}
+    >
       {text}
     </AntdButton>
   )

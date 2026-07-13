@@ -1,7 +1,19 @@
 import { Table as AntdTable } from "antd"
-import React, { PropsWithChildren, useEffect, useMemo, useRef } from "react"
+import React, {
+  PropsWithChildren,
+  ReactElement,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react"
 import { useDrag } from "react-dnd"
 import { useItemDrop } from "../../../hooks/useItemDrop"
+
+interface TableColumnProps {
+  id: number
+  title: string
+  dataIndex: string
+}
 
 export default function Table({
   id,
@@ -27,20 +39,20 @@ export default function Table({
   }, [])
 
   const columns = useMemo(() => {
-    return React.Children.map(children, (item: any) => {
-      return {
-        title: (
-          <div
-            className="m-[-16px] p-[16px]"
-            data-component-id={item.props?.id}
-          >
-            {item.props?.title}
-          </div>
-        ),
-        dataIndex: item.props?.dataIndex,
-        key: item,
-      }
-    })
+    return (
+      React.Children.map(children, (item) => {
+        const props = (item as ReactElement<TableColumnProps>).props
+        return {
+          title: (
+            <div className="m-[-16px] p-[16px]" data-component-id={props?.id}>
+              {props?.title}
+            </div>
+          ),
+          dataIndex: props?.dataIndex,
+          key: props?.id,
+        }
+      }) || []
+    )
   }, [children])
 
   return (

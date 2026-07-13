@@ -33,6 +33,8 @@ const ShowMessage = ({ value, onChange }: ComponentMethodProps) => {
 
   useEffect(() => {
     if (value) {
+      // 从外部传入的 value(已保存的配置)回填本地表单状态。
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setComponentId(value.componentId)
       setMethod(value.method)
       setSelectedComponent(getComponentById(value.componentId, components))

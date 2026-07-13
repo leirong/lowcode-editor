@@ -13,7 +13,9 @@ function Page({
   const { canDrop, drop } = useItemDrop(accept!, id)
   return (
     <div
-      ref={drop}
+      ref={(node) => {
+        drop(node)
+      }}
       data-component-id={id}
       className="p-[20px] h-[100%] box-border"
       style={{ ...styles, border: canDrop ? "2px solid blue" : "none" }}

@@ -41,6 +41,8 @@ export default function ActionModal(props: ActionModalProps) {
 
   useEffect(() => {
     if (action) {
+      // 根据外部传入的 action 回填当前选中的分段。
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setKey(map[action.type])
     }
   }, [action])

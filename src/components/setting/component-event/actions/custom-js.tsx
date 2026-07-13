@@ -13,9 +13,9 @@ export interface CustomJSProps {
 export default function CustomJS({ value, onChange }: CustomJSProps) {
   const { curComponentId } = useComponentsStore()
 
-  if (!curComponentId) return
-
   const [code, setCode] = useState(value)
+
+  if (!curComponentId) return null
 
   const handleEditorMount: OnMount = (editor, monaco) => {
     editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyJ, () => {

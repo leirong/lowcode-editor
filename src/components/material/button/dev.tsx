@@ -21,7 +21,14 @@ const Button = ({ id, styles, type, text }: ButtonProps) => {
   })
 
   return (
-    <AntdButton ref={drag} data-component-id={id} type={type} style={styles}>
+    <AntdButton
+      ref={(node) => {
+        drag(node)
+      }}
+      data-component-id={id}
+      type={type}
+      style={styles}
+    >
       {text}
     </AntdButton>
   )
