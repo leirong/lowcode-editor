@@ -1,6 +1,6 @@
 import { Allotment } from "allotment"
 import "allotment/dist/style.css"
-import { MaterialWrapper } from "./components/Material"
+import { MaterialPanel } from "./components/MaterialPanel"
 import { EditArea } from "./components/EditArea"
 import { Setting } from "./components/Setting"
 
@@ -8,7 +8,7 @@ export const Editor = () => {
   return (
     <Allotment>
       <Allotment.Pane preferredSize={240} maxSize={300} minSize={200}>
-        <MaterialWrapper />
+        <MaterialPanel />
       </Allotment.Pane>
       <Allotment.Pane>
         <EditArea />

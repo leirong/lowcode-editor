@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useComponentConfigStore } from '../../../../../stores/componentConfig'
 import { DragItem } from '../DragItem'
 
-export function Material() {
+export function MaterialList() {
   const { componentConfig } = useComponentConfigStore()
 
   const components = useMemo(() => {
