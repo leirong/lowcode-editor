@@ -7,7 +7,7 @@ import { CSSProperties } from 'react'
 
 /** Button 物料的 props(同 dev 版) */
 export interface ButtonProps {
-  id: number
+  id: string
   styles?: CSSProperties
   type: ButtonType
   text: string

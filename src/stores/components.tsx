@@ -14,7 +14,7 @@ export type ComponentProps = Record<string, any>
 /** 组件树中的单个节点 */
 export interface Component {
   /** 组件唯一标识 */
-  id: number
+  id: string
   /** 物料名(对应 componentConfig 的 key) */
   name: string
   /** 中文描述,用于大纲/展示 */
@@ -26,12 +26,12 @@ export interface Component {
   /** 子组件(容器类物料才有) */
   children?: Component[]
   /** 父组件 id,便于删除时定位 */
-  parentId?: number
+  parentId?: string
 }
 
 interface State {
   /** 当前选中组件的 id */
-  curComponentId?: number | null
+  curComponentId?: string | null
   /** 当前选中组件对象 */
   curComponent: Component | null
   /** 整棵组件树(根为 Page) */
@@ -40,19 +40,19 @@ interface State {
 
 interface Action {
   /** 新增组件(可指定父级) */
-  addComponent: (component: Component, parentId?: number) => void
+  addComponent: (component: Component, parentId?: string) => void
   /** 删除组件 */
-  deleteComponent: (componentId: number) => void
+  deleteComponent: (componentId: string) => void
   /** 更新属性 */
-  updateComponentProps: (componentId: number, props: ComponentProps) => void
+  updateComponentProps: (componentId: string, props: ComponentProps) => void
   updateComponentStyles: (
-    componentId: number,
+    componentId: string,
     styles: CSSProperties,
     /** 是否整体替换样式(否则为合并) */
     replace?: boolean,
   ) => void
   /** 设置当前选中组件 */
-  setCurComponentId: (componentId: number | null) => void
+  setCurComponentId: (componentId: string | null) => void
 }
 
 /**
@@ -71,7 +71,7 @@ const creator: StateCreator<Action & State> = (set, get) => ({
       curComponentId: componentId,
     })),
   // 初始组件树只有一个根节点 Page
-  components: [{ id: 1, name: 'Page', props: {}, desc: '页面' }],
+  components: [{ id: 'root', name: 'Page', props: {}, desc: '页面' }],
   addComponent: (component, parentId) =>
     set((state) => {
       // 指定了父级则挂到父级的 children 下,否则作为顶层组件
@@ -96,7 +96,7 @@ const creator: StateCreator<Action & State> = (set, get) => ({
     if (component?.parentId) {
       const parentComponent = getComponentById(component.parentId, get().components)
       if (parentComponent) {
-        parentComponent.children = parentComponent?.children?.filter((item) => item.id !== +componentId)
+        parentComponent.children = parentComponent?.children?.filter((item) => item.id !== componentId)
         set({ components: [...get().components] })
       }
     }
@@ -138,11 +138,11 @@ export const useComponentsStore = create<Action & State>()(
  * @param components - 待查找的组件树(或子树)
  * @returns 匹配的组件对象,未找到时返回 null
  */
-export function getComponentById(id: number | null, components: Component[]): Component | null {
+export function getComponentById(id: string | null, components: Component[]): Component | null {
   if (!id) return null
 
   for (const component of components) {
-    if (component.id == id) return component
+    if (component.id === id) return component
     // 深度优先遍历子树
     if (component.children && component.children.length > 0) {
       const result = getComponentById(id, component.children)

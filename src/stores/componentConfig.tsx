@@ -23,6 +23,7 @@ import {
   FormProd,
   FormItemProd,
 } from '@/materials'
+import { randomId } from '@/utils'
 
 /** 属性/样式配置项:描述设置面板里如何渲染某个属性的编辑控件 */
 export interface ComponentSetter {
@@ -229,7 +230,9 @@ export const useComponentConfigStore = create<State & Action>((set) => ({
     TableColumn: {
       name: 'TableColumn',
       defaultProps: {
-        dataIndex: `col_${new Date().getTime()}`,
+        get dataIndex() {
+          return randomId()
+        },
         title: '列名',
       },
       desc: '表格列',
@@ -292,7 +295,9 @@ export const useComponentConfigStore = create<State & Action>((set) => ({
     FormItem: {
       name: 'FormItem',
       defaultProps: {
-        name: new Date().getTime(),
+        get name() {
+          return randomId()
+        },
         label: '姓名',
         type: 'input',
         rules: {

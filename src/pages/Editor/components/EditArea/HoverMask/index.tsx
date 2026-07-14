@@ -5,7 +5,7 @@ import { getComponentById, useComponentsStore } from "@/stores"
 interface HoverMaskProps {
   containerClassName: string
   portalWrapperClassName: string
-  componentId: number
+  componentId: string
 }
 
 export const HoverMask = ({

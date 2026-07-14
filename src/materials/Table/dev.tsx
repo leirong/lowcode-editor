@@ -15,7 +15,7 @@ import { useItemDrop } from "../useItemDrop"
 
 /** 从 TableColumn 子节点上读取的列配置字段 */
 interface TableColumnProps {
-  id: number
+  id: string
   title: string
   dataIndex: string
 }

@@ -1,6 +1,7 @@
 import { useDrop } from 'react-dnd'
 import { useComponentConfigStore, getComponentById, useComponentsStore } from '@/stores'
 import { message } from 'antd'
+import { randomId } from '@/utils'
 
 /**
  * 拖拽项的数据结构:在 useDrag 中作为 item 传递,drop 时读取
@@ -11,7 +12,7 @@ import { message } from 'antd'
 export interface ItemType {
   type: string
   dragType?: 'add' | 'move'
-  id: number
+  id: string
 }
 
 /**
@@ -20,7 +21,7 @@ export interface ItemType {
  * @param id - 当前容器组件的 id,作为新组件/被移动组件的父节点
  * @returns 拖拽相关状态与 ref:canDrop(是否可放置)、drop(绑定到容器 DOM 的 drop ref)
  */
-export function useItemDrop(accept: string[], id: number) {
+export function useItemDrop(accept: string[], id: string) {
   const { addComponent, components, deleteComponent } = useComponentsStore()
   const { componentConfig } = useComponentConfigStore()
   const [{ canDrop }, drop] = useDrop(() => ({
@@ -37,15 +38,15 @@ export function useItemDrop(accept: string[], id: number) {
         deleteComponent(item.id)
         addComponent(component, id)
       } else {
-        // 新增物料:从组件配置读取默认 props 和描述,以时间戳作为唯一 id 创建新组件
-        const { defaultProps: props, desc } = componentConfig[item.type]
+        // 新增物料:从组件配置读取默认 props 和描述,以随机字符串作为唯一 id 创建新组件
+        const { defaultProps, desc } = componentConfig[item.type]
 
         addComponent(
           {
-            id: new Date().getTime(),
+            id: randomId(),
             name: item.type,
             desc,
-            props,
+            props: { ...defaultProps },
             styles: {},
           },
           id,

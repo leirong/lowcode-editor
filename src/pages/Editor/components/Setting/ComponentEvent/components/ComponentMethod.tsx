@@ -10,7 +10,7 @@ export interface ComponentMethodConfig {
   type: 'componentMethod'
   config: {
     /** 目标组件 id */
-    componentId: number
+    componentId: string
     /** 目标组件暴露的方法名 */
     method: string
   }
@@ -36,7 +36,7 @@ export const ComponentMethod = ({ value, onChange }: ComponentMethodProps) => {
   // 当前选中的目标组件对象,用于查出它支持哪些方法
   const [selectedComponent, setSelectedComponent] = useState<Component | null>()
 
-  const [componentId, setComponentId] = useState<number>()
+  const [componentId, setComponentId] = useState<string>()
 
   const [method, setMethod] = useState<string>()
 
@@ -55,7 +55,7 @@ export const ComponentMethod = ({ value, onChange }: ComponentMethodProps) => {
    * 切换目标组件时,更新选中组件以便刷新其可用方法列表
    * @param value - 新选中的目标组件 id
    */
-  function componentChange(value: number) {
+  function componentChange(value: string) {
     setSelectedComponent(getComponentById(value, components))
   }
   return (

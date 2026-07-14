@@ -7,7 +7,7 @@ export function EditArea() {
   const { components, setCurComponentId, curComponentId } = useComponentsStore()
   const { componentConfig } = useComponentConfigStore()
   // 当前鼠标悬浮的组件 id,用于控制悬浮遮罩的显示
-  const [hoveredComponentId, setHoveredComponentId] = useState<number>()
+  const [hoveredComponentId, setHoveredComponentId] = useState<string>()
 
   /**
    * 递归渲染组件树:遍历每个组件节点,并对其 children 继续递归渲染,从而还原出整棵嵌套结构
@@ -51,7 +51,7 @@ export function EditArea() {
 
       const componentId = ele.dataset?.componentId
       if (componentId) {
-        setHoveredComponentId(+componentId)
+        setHoveredComponentId(componentId)
         return
       }
     }
@@ -76,7 +76,7 @@ export function EditArea() {
 
       const componentId = ele.dataset?.componentId
       if (componentId) {
-        setCurComponentId(+componentId)
+        setCurComponentId(componentId)
         return
       }
     }

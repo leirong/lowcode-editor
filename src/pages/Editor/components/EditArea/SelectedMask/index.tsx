@@ -7,7 +7,7 @@ import { DeleteOutlined } from "@ant-design/icons"
 interface SelectedMaskProps {
   portalWrapperClassName: string
   containerClassName: string
-  componentId: number
+  componentId: string
 }
 
 export function SelectedMask({
@@ -159,7 +159,7 @@ export function SelectedMask({
                 label: item.name,
               })),
               onClick: ({ key }) => {
-                setCurComponentId(+key)
+                setCurComponentId(key)
               },
             }}
             disabled={parentComponents.length === 0}
@@ -178,8 +178,8 @@ export function SelectedMask({
             </div>
           </Dropdown>
 
-          {/* 删除按钮:根组件(id 为 1,通常是 Page)不允许删除,故隐藏 */}
-          {curComponentId !== 1 && (
+          {/* 没有父节点的根组件不允许删除 */}
+          {curComponent?.parentId && (
             <div style={{ padding: "0 8px", backgroundColor: "blue" }}>
               <Popconfirm
                 title="确认删除？"

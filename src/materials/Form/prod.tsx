@@ -21,7 +21,7 @@ export interface FormRef {
 }
 /** 从 FormItem 子节点上读取的表单项配置字段 */
 interface FormItemProps {
-  id: number
+  id: string
   label: string
   name: string
   type: string

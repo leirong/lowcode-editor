@@ -1,14 +1,14 @@
 import { CSSProperties } from "react"
 
 // interface CommonComponentProps {
-//   id: number
+//   id: string
 //   name: string
 //   styles?: CSSProperties
 // }
 
 declare global {
   interface CommonComponentProps {
-    id: number
+    id: string
     name: string
     styles?: CSSProperties
   }

@@ -9,7 +9,7 @@ import { useDrag } from "react-dnd"
 /** Button 物料的 props */
 export interface ButtonProps {
   /** 组件唯一标识 */
-  id: number
+  id: string
   /** 自定义样式 */
   styles?: CSSProperties
   /** antd 按钮类型(primary/default 等) */

@@ -16,7 +16,7 @@ export function Outline() {
       defaultExpandAll
       onSelect={([selectedKey]) => {
         // 选中大纲节点 → 设为当前编辑组件
-        setCurComponentId(selectedKey as number)
+        setCurComponentId(selectedKey.toString())
       }}
     />
   )
