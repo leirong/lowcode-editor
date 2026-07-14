@@ -2,16 +2,10 @@
  * @file Form 物料的编辑态(dev)组件:画布内展示的表单。
  * 仅接受 FormItem 子物料拖入,并从子节点 props 提取表单项;编辑态下输入控件禁用交互(pointerEvents:none)。
  */
-import { Form as AntdForm, DatePicker, Input } from "antd"
-import { useItemDrop } from "../useItemDrop"
-import React, {
-  PropsWithChildren,
-  ReactElement,
-  useEffect,
-  useMemo,
-  useRef,
-} from "react"
-import { useDrag } from "react-dnd"
+import { Form as AntdForm, DatePicker, Input } from 'antd'
+import { useItemDrop } from '../useItemDrop'
+import React, { PropsWithChildren, ReactElement, useEffect, useMemo, useRef } from 'react'
+import { useDrag } from 'react-dnd'
 interface FormProps extends CommonComponentProps, PropsWithChildren {
   onFinish: (values: Record<string, unknown>) => void
 }
@@ -37,7 +31,7 @@ export const Form = ({ id, name, children, onFinish }: FormProps) => {
   const [form] = AntdForm.useForm()
 
   // 允许 FormItem 拖入本表单作为表单项
-  const { canDrop, drop } = useItemDrop(["FormItem"], id)
+  const { canDrop, drop } = useItemDrop(['FormItem'], id)
 
   const divRef = useRef<HTMLDivElement>(null)
 
@@ -46,7 +40,7 @@ export const Form = ({ id, name, children, onFinish }: FormProps) => {
     type: name,
     item: {
       type: name,
-      dragType: "move",
+      dragType: 'move',
       id: id,
     },
   })
@@ -58,7 +52,7 @@ export const Form = ({ id, name, children, onFinish }: FormProps) => {
   }, [])
 
   // 将 FormItem 子节点转换为表单项配置列表
-  const formItems = useMemo(() => {
+  const formItems = useMemo<FormItemProps[]>(() => {
     return (
       React.Children.map(children, (item) => {
         const props = (item as ReactElement<FormItemProps>).props
@@ -76,7 +70,7 @@ export const Form = ({ id, name, children, onFinish }: FormProps) => {
   return (
     <div
       className={`w-[100%] p-[20px] min-h-[100px] ${
-        canDrop ? "border-[2px] border-[blue]" : "border-[1px] border-[#000]"
+        canDrop ? 'border-[2px] border-[blue]' : 'border-[1px] border-[#000]'
       }`}
       ref={divRef}
       data-component-id={id}
@@ -90,27 +84,24 @@ export const Form = ({ id, name, children, onFinish }: FormProps) => {
         {formItems.map((item) => {
           return (
             <AntdForm.Item
-              key={item.name}
+              key={item.id}
               data-component-id={item.id}
               name={item.name}
               label={item.label}
+              preserve={false}
               rules={
-                item.rules === "required"
+                item.rules === 'required'
                   ? [
                       {
                         required: true,
-                        message: "不能为空",
+                        message: '不能为空',
                       },
                     ]
                   : []
               }
             >
-              {item.type === "input" && (
-                <Input style={{ pointerEvents: "none" }} />
-              )}
-              {item.type === "date" && (
-                <DatePicker style={{ pointerEvents: "none" }} />
-              )}
+              {item.type === 'input' && <Input style={{ pointerEvents: 'none' }} />}
+              {item.type === 'date' && <DatePicker style={{ pointerEvents: 'none' }} />}
             </AntdForm.Item>
           )
         })}

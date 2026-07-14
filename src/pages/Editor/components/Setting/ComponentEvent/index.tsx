@@ -85,8 +85,10 @@ export function ComponentEvent() {
    * 编辑动作:回填选中的动作并打开弹窗
    * @param action - 待编辑的动作配置
    */
-  const editAction = (action: ActionConfig) => {
+  const editAction = (eventName: string, action: ActionConfig, index: number) => {
+    setCurrentEvent(eventName)
     setAction(action)
+    setCurActionIndex(index)
     setVisible(true)
   }
 
@@ -103,6 +105,8 @@ export function ComponentEvent() {
               // 阻止冒泡避免触发折叠面板展开;标记当前事件并打开新增弹窗
               e.stopPropagation()
               setCurrentEvent(name)
+              setAction(undefined)
+              setCurActionIndex(undefined)
               setVisible(true)
             }}
           >
@@ -123,8 +127,7 @@ export function ComponentEvent() {
                     <EditOutlined
                       className='absolute top-[10px] right-[30px] cursor-pointer'
                       onClick={() => {
-                        editAction(action)
-                        setCurActionIndex(index)
+                        editAction(name, action, index)
                       }}
                     />
                     <DeleteOutlined
@@ -141,8 +144,7 @@ export function ComponentEvent() {
                     <EditOutlined
                       className='absolute top-[10px] right-[30px] cursor-pointer'
                       onClick={() => {
-                        editAction(action)
-                        setCurActionIndex(index)
+                        editAction(name, action, index)
                       }}
                     />
                     <DeleteOutlined
@@ -160,8 +162,7 @@ export function ComponentEvent() {
                     <EditOutlined
                       className='absolute top-[10px] right-[30px] cursor-pointer'
                       onClick={() => {
-                        editAction(action)
-                        setCurActionIndex(index)
+                        editAction(name, action, index)
                       }}
                     />
                     <DeleteOutlined
@@ -182,8 +183,7 @@ export function ComponentEvent() {
                     <EditOutlined
                       className='absolute top-[10px] right-[30px] cursor-pointer'
                       onClick={() => {
-                        editAction(action)
-                        setCurActionIndex(index)
+                        editAction(name, action, index)
                       }}
                     />
                     <DeleteOutlined

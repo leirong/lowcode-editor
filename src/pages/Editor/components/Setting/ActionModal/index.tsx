@@ -24,6 +24,14 @@ interface ActionModalProps {
   onOk: (config: ActionConfig) => void
   onCancel: () => void
 }
+
+const actionTypeLabels: Record<ActionConfig["type"], string> = {
+  goToLink: "访问链接",
+  showMessage: "消息提示",
+  componentMethod: "组件方法",
+  customJS: "自定义 JS",
+}
+
 /**
  * 新增/编辑事件动作的弹窗:用 Segmented 切换动作类型,
  * 根据类型渲染对应的配置表单(访问链接/消息提示/组件方法/自定义 JS)。
@@ -33,12 +41,6 @@ export function ActionModal(props: ActionModalProps) {
   const { visible, action, onOk, onCancel } = props
 
   // 动作类型到分段标签的映射,用于编辑时回填选中项
-  const map = {
-    goToLink: "访问链接",
-    showMessage: "消息提示",
-    componentMethod: "组件方法",
-    customJS: "自定义 JS",
-  }
   // 当前选中的动作类型分段
   const [key, setKey] = useState<string>("访问链接")
 
@@ -57,15 +59,20 @@ export function ActionModal(props: ActionModalProps) {
     if (action) {
       // 根据外部传入的 action 回填当前选中的分段。
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setKey(map[action.type])
+      setKey(actionTypeLabels[action.type])
+      setCurConfig(action)
+    } else if (visible) {
+      setKey("访问链接")
+      setCurConfig(undefined)
     }
-  }, [action])
+  }, [action, visible])
 
   return (
     <Modal
       title="事件动作配置"
       width={800}
       open={visible}
+      destroyOnHidden
       onOk={handleOk}
       onCancel={onCancel}
       okText="添加"

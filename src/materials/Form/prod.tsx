@@ -48,7 +48,7 @@ const FormRender: ForwardRefRenderFunction<FormRef, FormProps> = (
   )
 
   // 将 FormItem 子节点转换为表单项配置列表
-  const formItems = useMemo(() => {
+  const formItems = useMemo<FormItemProps[]>(() => {
     return (
       React.Children.map(children, (item) => {
         const props = (item as ReactElement<FormItemProps>).props
@@ -88,9 +88,10 @@ const FormRender: ForwardRefRenderFunction<FormRef, FormProps> = (
       {formItems.map((item) => {
         return (
           <AntdForm.Item
-            key={item.name}
+            key={item.id}
             name={item.name}
             label={item.label}
+            preserve={false}
             rules={
               item.rules === "required"
                 ? [
