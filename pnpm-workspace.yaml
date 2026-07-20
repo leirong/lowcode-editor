@@ -1,2 +1,4 @@
+minimumReleaseAge: 10080
+trustPolicy: no-downgrade
 minimumReleaseAgeExclude:
   - antd@6.5.1

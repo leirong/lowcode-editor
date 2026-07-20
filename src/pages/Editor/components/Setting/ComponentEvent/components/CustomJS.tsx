@@ -2,7 +2,7 @@
  * @file 「自定义 JS」动作的配置表单:用 Monaco 编辑器让用户编写事件触发时执行的 JS 代码。
  * 代码在预览态由 Preview 通过 new Function 执行,并注入 context/args。
  */
-import MonacoEditor, { OnMount } from "@monaco-editor/react"
+import { MonacoEditor, type OnMount } from "@/components/MonacoEditor"
 import { useState } from "react"
 import { useComponentsStore } from "@/stores"
 import { Form } from "antd"

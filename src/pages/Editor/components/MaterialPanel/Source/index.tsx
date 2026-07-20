@@ -1,4 +1,4 @@
-import MonacoEditor, { OnMount } from "@monaco-editor/react"
+import { MonacoEditor, type OnMount } from "@/components/MonacoEditor"
 import { useComponentsStore } from "@/stores"
 
 /**
